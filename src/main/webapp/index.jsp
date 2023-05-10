@@ -1,5 +1,7 @@
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil" %>
 <%@page contentType="text/html; ISO-8859-1" pageEncoding="UTF-8" %>
 
+<% HibernateUtil.getSessionFactory().openSession(); %>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,12 +1,11 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.User;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.UserAddress;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.CustomerAddress;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -61,13 +60,13 @@ public class CustomerRegisterServlet extends HttpServlet {
                 resp.getWriter().print(jsonb.toJson(new AuthResponseDTO(false, errorMsg)));
             } else {
 
-                User user = new User(firstName, lastName, email, PasswordHasher.hashPassword(password), mobile);
-                user.setUserAddress(new UserAddress(address, province, city, postalCode, user));
+                Customer customer = new Customer(firstName, lastName, email, PasswordHasher.hashPassword(password), mobile);
+                customer.setCustomerAddress(new CustomerAddress(address, province, city, postalCode, customer));
                 session.beginTransaction();
                 try {
-                    session.save(user);
+                    session.save(customer);
                     session.getTransaction().commit();
-                    req.getSession().setAttribute("user", user.getEmail());
+                    req.getSession().setAttribute("customer", customer.getEmail());
                     resp.getWriter().print(jsonb.toJson(new AuthResponseDTO(true, req.getContextPath()+"/customer")));
                 } catch (Exception e) {
                     resp.getWriter().print(jsonb.toJson(new AuthResponseDTO(false, "Email already exists")));

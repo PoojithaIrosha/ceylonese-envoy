@@ -7,7 +7,7 @@
       <div class="col-auto">
         <div class="d-flex items-center">
           <!--Header Logo Start-->
-          <a href="index.jsp" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
+          <a href="${contextPath}/" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
             <img src="${contextPath}/assets/img/logo/logo.png" alt="logo icon" />
             <img src="${contextPath}/assets/img/logo/logo.png" alt="logo icon" />
           </a>
@@ -745,7 +745,7 @@
           <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
                data-x-toggle="text-white">
             <div>
-              <a href="login.html" class="d-flex items-center icon-user text-inherit text-22"></a>
+              <a href="login.html" class="d-flex items-center icon-customer text-inherit text-22"></a>
             </div>
             <div>
               <button class="d-flex items-center icon-menu text-inherit text-20"

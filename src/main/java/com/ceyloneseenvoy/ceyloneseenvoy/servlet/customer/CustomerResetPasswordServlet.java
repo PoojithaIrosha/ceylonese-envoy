@@ -1,11 +1,10 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.User;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -33,17 +32,17 @@ public class CustomerResetPasswordServlet extends HttpServlet {
             try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jb = JsonbBuilder.create()) {
                 session.beginTransaction();
                 CriteriaBuilder builder = session.getCriteriaBuilder();
-                CriteriaQuery<User> query = builder.createQuery(User.class);
-                Root<User> root = query.from(User.class);
+                CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+                Root<Customer> root = query.from(Customer.class);
 
                 query.select(root).where(builder.and(builder.equal(root.get("email"), email), builder.equal(root.get("verificationCode"), uuid)));
-                User user = session.createQuery(query).uniqueResult();
+                Customer customer = session.createQuery(query).uniqueResult();
 
-                if (user != null) {
-                    user.setPassword(PasswordHasher.hashPassword(password));
-                    user.setVerificationCode(null);
+                if (customer != null) {
+                    customer.setPassword(PasswordHasher.hashPassword(password));
+                    customer.setVerificationCode(null);
                     try {
-                        session.update(user);
+                        session.update(customer);
                         session.getTransaction().commit();
                     } catch (Exception e) {
                         session.getTransaction().commit();

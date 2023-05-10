@@ -1,11 +1,10 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.User;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.EmailUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -46,11 +45,11 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
         try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jb = JsonbBuilder.create()) {
 
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
+            CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+            Root<Customer> root = query.from(Customer.class);
 
             query.select(root).where(builder.equal(root.get("email"), email));
-            User result = session.createQuery(query).uniqueResult();
+            Customer result = session.createQuery(query).uniqueResult();
 
             if (result != null) {
                 try {

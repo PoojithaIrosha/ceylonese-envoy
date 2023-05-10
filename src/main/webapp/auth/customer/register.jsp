@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%
+    if (session.getAttribute("customer") != null) {
+        response.sendRedirect(request.getContextPath() + "/customer");
+        return;
+    }
+%>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -118,7 +123,7 @@
                             </div>
 
                             <div>
-                                <span id="registerError" class="text-danger"><%= request.getParameter("error") %></span>
+                                <span id="registerError" class="text-danger"></span>
                             </div>
 
                             <div class="col-12 d-grid">

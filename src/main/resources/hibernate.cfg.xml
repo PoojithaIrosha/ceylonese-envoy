@@ -11,7 +11,7 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.User" />
-        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.UserAddress" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.Customer" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.CustomerAddress" />
     </session-factory>
 </hibernate-configuration>

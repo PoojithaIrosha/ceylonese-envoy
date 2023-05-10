@@ -1,7 +1,7 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.User;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import org.hibernate.Session;
@@ -29,14 +29,14 @@ public class CustomerLoginServlet extends HttpServlet {
         try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jb = JsonbBuilder.create()) {
 
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
+            CriteriaQuery<Customer> query = criteriaBuilder.createQuery(Customer.class);
+            Root<Customer> root = query.from(Customer.class);
 
             query.select(root).where(criteriaBuilder.equal(root.get("email"), email));
-            User user = session.createQuery(query).uniqueResult();
+            Customer customer = session.createQuery(query).uniqueResult();
 
-            if (user != null && PasswordHasher.checkPassword(password, user.getPassword())) {
-                req.getSession().setAttribute("user", user.getEmail());
+            if (customer != null && PasswordHasher.checkPassword(password, customer.getPassword())) {
+                req.getSession().setAttribute("customer", customer.getEmail());
                 resp.getWriter().println(jb.toJson(new AuthResponseDTO(true, req.getContextPath()+"/auth/customer/login.jsp")));
             } else {
                 resp.getWriter().println(jb.toJson(new AuthResponseDTO(false, "Invalid email or password")));

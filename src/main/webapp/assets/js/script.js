@@ -95,7 +95,7 @@ $("#registerForm").submit((event) => {
             let json = JSON.parse(result);
             console.log(json)
             if(json.status) {
-                $("#registerError").html("");
+                $("#registerForm").trigger("reset");
                 Swal.fire({
                     title: "Success",
                     text: "Registration successful",
