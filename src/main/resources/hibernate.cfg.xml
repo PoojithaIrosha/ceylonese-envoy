@@ -2,16 +2,14 @@
 <!--xmlns="http://www.hibernate.org/xsd/hibernate-configuration"-->
 <hibernate-configuration >
     <session-factory>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">Poojitha@2006</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ceylonese_envoy?useSSL=false</property>
-        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.Customer" />
         <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.CustomerAddress" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourReview" />
     </session-factory>
 </hibernate-configuration>
