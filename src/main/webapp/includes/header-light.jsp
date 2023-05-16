@@ -21,12 +21,15 @@
                             <div class="menu js-navList">
                                 <ul class="menu__nav text-dark-1 -is-active">
 
-                                    <li class="menu-item-has-children">
-                                        <a data-barba href="#">
+                                    <li>
+                                        <a href="${contextPath}/index.jsp">
                                             <span class="mr-10">Home</span>
                                         </a>
                                     </li>
 
+                                    <li>
+                                        <a href="${contextPath}/tour-list.jsp"> Tour Packages </a>
+                                    </li>
 
                                     <li class="menu-item-has-children -has-mega-menu">
                                         <a data-barba href="#">
@@ -505,11 +508,7 @@
                                         </ul>
                                     </li>
 
-                                    <li>
-                                        <a href="destinations.html">
-                                            Destinations
-                                        </a>
-                                    </li>
+
 
 
                                     <li class="menu-item-has-children">
@@ -585,9 +584,23 @@
             <div class="col-auto">
                 <div class="d-flex items-center">
 
+                    <%
+                        if (session.getAttribute("customer") == null) {
+                    %>
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
                         <a href="${contextPath}/auth/customer/login.jsp" class="button px-30 fw-400 text-14 -blue-1 bg-blue-1 h-50 text-white">Sign In / Register</a>
                     </div>
+                    <%
+                    }else {
+                    %>
+                    <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
+                        <a href="${contextPath}/customer" class="button px-30 fw-400 text-14 -blue-1 bg-blue-1 h-50 text-white">Go to Dashboard</a>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
 
                     <div class="d-none xl:d-flex x-gap-20 items-center pl-30" data-x="header-mobile-icons" data-x-toggle="text-white">
                         <div><a href="login.html" class="d-flex items-center icon-customer text-inherit text-22"></a></div>

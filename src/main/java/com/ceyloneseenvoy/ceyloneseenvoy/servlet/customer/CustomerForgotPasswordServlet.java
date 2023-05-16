@@ -1,6 +1,6 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
-import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
+import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.EmailUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
@@ -12,7 +12,6 @@ import javax.mail.MessagingException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,16 +26,6 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
     private String smtpPort;
     private String smtpEmail;
     private String smtpPassword;
-
-    @Override
-    public void init() throws ServletException {
-        // reads SMTP server setting from web.xml file
-        ServletContext context = getServletContext();
-        smtpHost = context.getInitParameter("smtp-host");
-        smtpPort = context.getInitParameter("smtp-port");
-        smtpEmail = context.getInitParameter("smtp-email");
-        smtpPassword = context.getInitParameter("smtp-password");
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -624,14 +613,14 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
 
-                    EmailUtil.sendEmail(smtpHost, smtpPort, smtpEmail, smtpPassword, email, "Password Reset", message, "ceyloneseenvoy@gmail.com");
-                    resp.getWriter().print(jb.toJson(new AuthResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
+                    EmailUtil.sendEmail(email, "Password Reset", message, "ceyloneseenvoy@gmail.com");
+                    resp.getWriter().print(jb.toJson(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
                 } catch (MessagingException e) {
-                    resp.getWriter().print(jb.toJson(new AuthResponseDTO(false, "Unable to send email")));
+                    resp.getWriter().print(jb.toJson(new ResponseDTO(false, "Unable to send email")));
                     throw new RuntimeException("Unable to send email");
                 }
             } else {
-                resp.getWriter().print(jb.toJson(new AuthResponseDTO(false, "User not found with the given email")));
+                resp.getWriter().print(jb.toJson(new ResponseDTO(false, "User not found with the given email")));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

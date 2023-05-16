@@ -1,4 +1,14 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil" %>
+<%@ page import="org.hibernate.Session" %>
+<%@ page import="javax.persistence.criteria.CriteriaBuilder" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" %>
+<%@ page import="javax.persistence.criteria.CriteriaQuery" %>
+<%@ page import="javax.persistence.criteria.Root" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
 <%@page contentType="text/html; ISO-8859-1" pageEncoding="UTF-8" %>
 
 <% HibernateUtil.getSessionFactory().openSession(); %>
@@ -62,71 +72,78 @@
                             <div class="">
                                 <button class="tabs__button text-15 fw-500 text-white pb-4 js-tabs-button"
                                         data-tab-target=".-tab-item-1">
-                                    Tours
+                                    Search Tour Which Matches Your Taste
                                 </button>
                             </div>
                         </div>
 
                         <div class="tabs__content mt-30 md:mt-20 js-tabs-content">
                             <div class="tabs__pane -tab-item-1 is-tab-el-active">
-                                <div class="mainSearch -w-900 bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-100">
-                                    <div class="button-grid items-center">
+                                <div class="-w-900 bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-custom">
+                                    <form action="tour-list.jsp" class="searchMenuCustom justify-content-between">
 
-                                        <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch item">
-                                            <div data-x-dd-click="searchMenu-loc">
-                                                <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
-
-                                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <input autocomplete="off" type="search"
-                                                           placeholder="Where are you going?"/>
+                                        <div class="col pr-30 pl-10 lg:py-20 lg:px-0">
+                                            <div class="ml-10">
+                                                <div class="d-flex">
+                                                    <i class="icon-location-2 text-15 text-light-1 mt-5"></i>&nbsp;
+                                                    <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
-                                            <div data-x-dd-click="searchMenu-loc">
-                                                <h4 class="text-15 fw-500 ls-2 lh-16">
-                                                    Check in
-                                                </h4>
-
                                                 <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <input type="date">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
-                                            <div data-x-dd-click="searchMenu-loc">
-                                                <h4 class="text-15 fw-500 ls-2 lh-16">
-                                                    Check out
-                                                </h4>
-
-                                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <input type="date">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="searchMenu-guests px-30 lg:py-20 lg:px-0 js-form-dd js-form-counters">
-                                            <div data-x-dd-click="searchMenu-guests">
-                                                <h4 class="text-15 fw-500 ls-2 lh-16">No of Guest</h4>
-
-                                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <input type="number" value="0"/>
+                                                    <%
+                                                        if (request.getParameter("search") != null && !request.getParameter("search").equals("")) {
+                                                            pageContext.setAttribute("search", request.getParameter("search"));
+                                                        }
+                                                    %>
+                                                    <input name="search" type="search"
+                                                           placeholder="Where are you going?"
+                                                           value="${search}"/>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="button-item">
-                                            <button
-                                                    class="mainSearch__submit button -dark-1 h-60 px-35 col-12 rounded-100 bg-blue-1 text-white"
-                                                    data-bs-toggle="modal" data-bs-target="#searchTravelPackagesModal">
+                                            <button type="submit"
+                                                    class="mainSearch__submit button -dark-1 h-60 px-35 col-12 rounded-100 bg-blue-1 text-white">
                                                 <i class="fa fa-search text-20 mr-10"></i>
                                                 Search
                                             </button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
+
+                                <%-- <div class="mainSearch -col-3-big bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 mt-30"> --%>
+
+
+                                <%--     <form action="tour-list.jsp" class="searchMenuCustom m-0 p-0"> --%>
+                                <%--         <div hidden="hidden"> --%>
+                                <%--             <input name="page" type="text" hidden="hidden" --%>
+                                <%--                    value="<%= (request.getParameter("page") != null && !request.getParameter("page").equals("") && Integer.parseInt(request.getParameter("page")) > 0) ? request.getParameter("page") : "1"%>"> --%>
+                                <%--         </div> --%>
+                                <%--         <div class="col pr-30 pl-10 lg:py-20 lg:px-0"> --%>
+                                <%--             <div> --%>
+                                <%--                 <div class="ml-10"> --%>
+                                <%--                     <h4 class="text-15 fw-500 ls-2 lh-16"><i --%>
+                                <%--                             class="icon-location-2 text-20 text-light-1 mt-5"></i> Location</h4> --%>
+                                <%--                     <div class="text-15 text-light-1 ls-2 lh-16"> --%>
+                                <%--                         <% --%>
+                                <%--                             if (request.getParameter("search") != null && !request.getParameter("search").equals("")) { --%>
+                                <%--                                 pageContext.setAttribute("search", request.getParameter("search")); --%>
+                                <%--                             } --%>
+                                <%--                         %> --%>
+                                <%--                         <input name="search" type="search" placeholder="Where are you going?" --%>
+                                <%--                                value="${search}"/> --%>
+                                <%--                     </div> --%>
+                                <%--                 </div> --%>
+                                <%--             </div> --%>
+                                <%--         </div> --%>
+                                <%--         <div> --%>
+                                <%--             <button class="mainSearch__submit button -dark-1 py-15 px-40 col-12 rounded-4 bg-blue-1 text-white"> --%>
+                                <%--                 <i class="icon-search text-20 mr-10"></i> --%>
+                                <%--                 Search --%>
+                                <%--             </button> --%>
+                                <%--         </div> --%>
+                                <%--     </form> --%>
+                                <%-- </div> --%>
                             </div>
                         </div>
                     </div>
@@ -381,13 +398,12 @@
                 <div class="col-auto">
                     <div class="sectionTitle -md">
                         <h2 class="sectionTitle__title">Most Popular Tours</h2>
-                        <p class=" sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames ac ante ipsum</p>
                     </div>
                 </div>
 
                 <div class="col-auto">
 
-                    <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1">
+                    <a href="tour-list.jsp" class="button -md -blue-1 bg-blue-1-05 text-blue-1">
                         More
                         <div class="icon-arrow-top-right ml-15"></div>
                     </a>
@@ -397,254 +413,80 @@
 
             <div class="row y-gap-30 pt-40 sm:pt-20">
 
-                <div data-anim-child="slide-up delay-1" class="col-xl-3 col-lg-3 col-sm-6">
+                <%
+                    // Decimal Formatter
+                    pageContext.setAttribute("df", DecimalFormatUtil.getInstance());
 
-                    <a href="tour-single.html" class="tourCard -type-1 rounded-4 ">
-                        <div class="tourCard__image">
+                    Session hs = HibernateUtil.getSessionFactory().openSession();
+                    CriteriaBuilder criteriaBuilder = hs.getCriteriaBuilder();
+                    CriteriaQuery<TourPackage> query = criteriaBuilder.createQuery(TourPackage.class);
+                    Root<TourPackage> root = query.from(TourPackage.class);
+                    query.select(root);
+                    query.where(criteriaBuilder.equal(root.get("isActive"), IsActive.ACTIVE));
+                    query.orderBy(criteriaBuilder.desc(root.get("id")));
 
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="assets/img/tours/1.jpg" alt="image">
+                    List<TourPackage> tourPackages = hs.createQuery(query)
+                            .setMaxResults(4)
+                            .getResultList();
+                    pageContext.setAttribute("tourPackages", tourPackages);
+                %>
+
+                <c:forEach items="${tourPackages}" var="tourPackage">
+                    <div data-anim-child="slide-up delay-1" class="col-xl-3 col-lg-3 col-sm-6">
+
+                        <a href="${contextPath}/tour-details.jsp?package=${tourPackage.id}" class="tourCard -type-1 rounded-4 ">
+                            <div class="tourCard__image">
+
+                                <div class="cardImage ratio ratio-1:1">
+                                    <div class="cardImage__content">
+                                        <img class="rounded-4 col-12" src="${contextPath}/${tourPackage.tourPackageImages.get(0).image}" alt="image">
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
+                            <div class="tourCard__content mt-10">
 
-                        <div class="tourCard__content mt-10">
-                            <div class="d-flex items-center lh-14 mb-5">
-                                <div class="text-14 text-light-1">11 days</div>
-                                <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                <div class="text-14 text-light-1">Full-day Tours</div>
-                            </div>
+                                <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
+                                    <span>${tourPackage.name}</span>
+                                </h4>
 
-                            <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>Eleven Nights Tour</span>
-                            </h4>
+                                <p class="text-light-1 lh-14 text-14 mt-5">
+                                    ${tourPackage.locations}
+                                </p>
 
-                            <p class="text-light-1 lh-14 text-14 mt-5">
-                                Colombo, Pinnawala, Sigiriya, Polonnaruwa, A’Pura, Minneriya, Kandy, Peradeniya, Nuwara
-                                Eliya,
-                                Beruwala, Galle
-                            </p>
+                                <div class="row justify-between items-center pt-15">
+                                    <div class="col-auto">
+                                        <div class="d-flex items-center">
+                                            <div class="d-flex items-center x-gap-5">
 
-                            <div class="row justify-between items-center pt-15">
-                                <div class="col-auto">
-                                    <div class="d-flex items-center">
-                                        <div class="d-flex items-center x-gap-5">
+                                                <div class="icon-star text-yellow-1 text-10"></div>
 
-                                            <div class="icon-star text-yellow-1 text-10"></div>
+                                                <div class="icon-star text-yellow-1 text-10"></div>
 
-                                            <div class="icon-star text-yellow-1 text-10"></div>
+                                                <div class="icon-star text-yellow-1 text-10"></div>
 
-                                            <div class="icon-star text-yellow-1 text-10"></div>
+                                                <div class="icon-star text-yellow-1 text-10"></div>
 
-                                            <div class="icon-star text-yellow-1 text-10"></div>
+                                                <div class="icon-star text-yellow-1 text-10"></div>
 
-                                            <div class="icon-star text-yellow-1 text-10"></div>
+                                            </div>
 
+                                            <div class="text-14 text-light-1 ml-10">300 reviews</div>
                                         </div>
-
-                                        <div class="text-14 text-light-1 ml-10">300 reviews</div>
                                     </div>
-                                </div>
 
-                                <div class="col-auto">
-                                    <div class="text-14 text-light-1">
-                                        <span class="text-16 fw-500 text-dark-1">Rs 500,000</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div data-anim-child="slide-up delay-1" class="col-xl-3 col-lg-3 col-sm-6">
-
-                    <a href="tour-single.html" class="tourCard -type-1 rounded-4 ">
-                        <div class="tourCard__image">
-
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="assets/img/tours/2.jpg" alt="image">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tourCard__content mt-10">
-                            <div class="d-flex items-center lh-14 mb-5">
-                                <div class="text-14 text-light-1">11 days</div>
-                                <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                <div class="text-14 text-light-1">Full-day Tours</div>
-                            </div>
-
-                            <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>Eleven Nights Tour</span>
-                            </h4>
-
-                            <p class="text-light-1 lh-14 text-14 mt-5">
-                                Colombo, Pinnawala, Sigiriya, Polonnaruwa, A’Pura, Minneriya, Kandy, Peradeniya, Nuwara
-                                Eliya,
-                                Beruwala, Galle
-                            </p>
-
-                            <div class="row justify-between items-center pt-15">
-                                <div class="col-auto">
-                                    <div class="d-flex items-center">
-                                        <div class="d-flex items-center x-gap-5">
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
+                                    <div class="col-auto">
+                                        <div class="text-14 text-light-1">
+                                            <span class="text-16 fw-500 text-dark-1">LKR ${df.format(tourPackage.price)}</span>
                                         </div>
-
-                                        <div class="text-14 text-light-1 ml-10">300 reviews</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="text-14 text-light-1">
-                                        <span class="text-16 fw-500 text-dark-1">Rs 500,000</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
 
-                </div>
-
-                <div data-anim-child="slide-up delay-3" class="col-xl-3 col-lg-3 col-sm-6">
-
-                    <a href="tour-single.html" class="tourCard -type-1 rounded-4 ">
-                        <div class="tourCard__image">
-
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="assets/img/tours/3.jpg" alt="image">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tourCard__content mt-10">
-                            <div class="d-flex items-center lh-14 mb-5">
-                                <div class="text-14 text-light-1">11 days</div>
-                                <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                <div class="text-14 text-light-1">Full-day Tours</div>
-                            </div>
-
-                            <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>Eleven Nights Tour</span>
-                            </h4>
-
-                            <p class="text-light-1 lh-14 text-14 mt-5">
-                                Colombo, Pinnawala, Sigiriya, Polonnaruwa, A’Pura, Minneriya, Kandy, Peradeniya, Nuwara
-                                Eliya,
-                                Beruwala, Galle
-                            </p>
-
-                            <div class="row justify-between items-center pt-15">
-                                <div class="col-auto">
-                                    <div class="d-flex items-center">
-                                        <div class="d-flex items-center x-gap-5">
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                        </div>
-
-                                        <div class="text-14 text-light-1 ml-10">300 reviews</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="text-14 text-light-1">
-                                        <span class="text-16 fw-500 text-dark-1">Rs 500,000</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div data-anim-child="slide-up delay-4" class="col-xl-3 col-lg-3 col-sm-6">
-
-                    <a href="tour-single.html" class="tourCard -type-1 rounded-4 ">
-                        <div class="tourCard__image">
-
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="assets/img/tours/4.jpg" alt="image">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tourCard__content mt-10">
-                            <div class="d-flex items-center lh-14 mb-5">
-                                <div class="text-14 text-light-1">11 days</div>
-                                <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                <div class="text-14 text-light-1">Full-day Tours</div>
-                            </div>
-
-                            <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>Eleven Nights Tour</span>
-                            </h4>
-
-                            <p class="text-light-1 lh-14 text-14 mt-5">
-                                Colombo, Pinnawala, Sigiriya, Polonnaruwa, A’Pura, Minneriya, Kandy, Peradeniya, Nuwara
-                                Eliya,
-                                Beruwala, Galle
-                            </p>
-
-                            <div class="row justify-between items-center pt-15">
-                                <div class="col-auto">
-                                    <div class="d-flex items-center">
-                                        <div class="d-flex items-center x-gap-5">
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                            <div class="icon-star text-yellow-1 text-10"></div>
-
-                                        </div>
-
-                                        <div class="text-14 text-light-1 ml-10">300 reviews</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="text-14 text-light-1">
-                                        <span class="text-16 fw-500 text-dark-1">Rs 500,000</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </section>
@@ -776,45 +618,6 @@
         </div>
     </section>
     <%-- Testimonial End --%>
-
-    <%-- Newsletter Start --%>
-    <section class="layout-pt-md layout-pb-md bg-dark-2">
-        <div class="container">
-            <div class="row y-gap-30 justify-between items-center">
-                <div class="col-auto">
-                    <div class="row y-gap-20 flex-wrap items-center">
-                        <div class="col-auto">
-                            <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
-                        </div>
-
-                        <div class="col-auto">
-                            <h4 class="text-26 text-white fw-600">
-                                Your Travel Journey Starts Here
-                            </h4>
-                            <div class="text-white">
-                                Sign up and we'll send the best deals to you
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-auto">
-                    <div class="single-field -w-410 d-flex x-gap-10 y-gap-20">
-                        <div>
-                            <input class="bg-white h-60" type="text" placeholder="Your Email"/>
-                        </div>
-
-                        <div>
-                            <button class="button -md h-60 bg-blue-1 text-white">
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <%-- Newsletter End --%>
 
     <%-- Footer Start--%>
     <%@include file="includes/footer.jsp" %>

@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="application"/>
 
 <!--Preloader Start-->
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
 <div class="preloader js-preloader">
   <div class="preloader__wrap">
     <div class="preloader__icon">

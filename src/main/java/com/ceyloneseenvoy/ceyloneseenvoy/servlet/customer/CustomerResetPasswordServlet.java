@@ -1,6 +1,6 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
-import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
+import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
@@ -49,16 +49,16 @@ public class CustomerResetPasswordServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
 
-                    resp.getWriter().print(jb.toJson(new AuthResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
+                    resp.getWriter().print(jb.toJson(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
                 } else {
-                    resp.getWriter().print(jb.toJson(new AuthResponseDTO(false, "Invalid email or verification code")));
+                    resp.getWriter().print(jb.toJson(new ResponseDTO(false, "Invalid email or verification code")));
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else {
             try (Jsonb jb = JsonbBuilder.create()) {
-                resp.getWriter().print(jb.toJson(new AuthResponseDTO(false, "Password mismatch")));
+                resp.getWriter().print(jb.toJson(new ResponseDTO(false, "Password mismatch")));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

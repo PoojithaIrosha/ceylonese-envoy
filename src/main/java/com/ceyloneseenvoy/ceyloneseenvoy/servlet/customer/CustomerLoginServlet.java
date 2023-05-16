@@ -1,6 +1,6 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
 
-import com.ceyloneseenvoy.ceyloneseenvoy.dto.AuthResponseDTO;
+import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
@@ -37,9 +37,9 @@ public class CustomerLoginServlet extends HttpServlet {
 
             if (customer != null && PasswordHasher.checkPassword(password, customer.getPassword())) {
                 req.getSession().setAttribute("customer", customer.getEmail());
-                resp.getWriter().println(jb.toJson(new AuthResponseDTO(true, req.getContextPath()+"/auth/customer/login.jsp")));
+                resp.getWriter().println(jb.toJson(new ResponseDTO(true, req.getContextPath()+"/auth/customer/login.jsp")));
             } else {
-                resp.getWriter().println(jb.toJson(new AuthResponseDTO(false, "Invalid email or password")));
+                resp.getWriter().println(jb.toJson(new ResponseDTO(false, "Invalid email or password")));
             }
 
         } catch (Exception e) {

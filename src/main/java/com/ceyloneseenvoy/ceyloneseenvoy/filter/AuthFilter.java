@@ -32,7 +32,7 @@ public class AuthFilter implements Filter {
         if (isLoggedIn) {
             filterChain.doFilter(request, response);
         } else {
-            httpServletResponse.sendRedirect(contextPath + "/auth/customer/login.jsp");
+            httpServletRequest.getRequestDispatcher("/errors/401.jsp").forward(request, response);
         }
 
     }
