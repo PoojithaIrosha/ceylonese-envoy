@@ -295,7 +295,7 @@
                             <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
                                 <div class="text-14 text-light-1">
                                     From <span
-                                        class="text-20 fw-500 text-dark-1 ml-5">LKR ${df.format(tourPackage.price)}</span>
+                                        class="text-20 fw-500 text-dark-1 ml-5">USD ${df.format(tourPackage.price)}</span>
                                 </div>
 
                                 <div class="row y-gap-20 pt-30">

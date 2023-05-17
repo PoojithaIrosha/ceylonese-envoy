@@ -740,7 +740,7 @@
                     <%-- <div class="row x-gap-20 items-center xxl:d-none">
                       <div class="col-auto">
                         <button class="d-flex items-center text-14 text-white" data-x-click="currency">
-                          <span class="js-currencyMenu-mainTitle">LKR</span>
+                          <span class="js-currencyMenu-mainTitle">USD</span>
                           <i class="icon-chevron-sm-down text-7 ml-10"></i>
                         </button>
                       </div>

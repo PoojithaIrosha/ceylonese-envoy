@@ -270,7 +270,7 @@
 
                                             <div class="text-14 text-light-1 mt-50 md:mt-20">From</div>
                                             <div class="text-22 lh-12 fw-600 mt-5">
-                                                LKR ${df.format(tourPackage.price)}</div>
+                                                USD ${df.format(tourPackage.price)}</div>
 
                                             <a href="tour-details.jsp?package=${tourPackage.id}"
                                                class="button -md -dark-1 bg-warning text-white mt-24">
