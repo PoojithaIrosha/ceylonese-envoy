@@ -5,10 +5,9 @@ import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.CustomerAddress;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +20,8 @@ public class CustomerRegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String email = req.getParameter("email");
@@ -55,9 +56,9 @@ public class CustomerRegisterServlet extends HttpServlet {
             errorMsg = "Country is required";
         }
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jsonb = JsonbBuilder.create()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             if (!errorMsg.isBlank()) {
-                resp.getWriter().print(jsonb.toJson(new ResponseDTO(false, errorMsg)));
+                resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, errorMsg)));
             } else {
 
                 Customer customer = new Customer(firstName, lastName, email, PasswordHasher.hashPassword(password), mobile);
@@ -67,9 +68,9 @@ public class CustomerRegisterServlet extends HttpServlet {
                     session.save(customer);
                     session.getTransaction().commit();
                     req.getSession().setAttribute("customer", customer.getEmail());
-                    resp.getWriter().print(jsonb.toJson(new ResponseDTO(true, req.getContextPath()+"/customer")));
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath()+"/customer")));
                 } catch (Exception e) {
-                    resp.getWriter().print(jsonb.toJson(new ResponseDTO(false, "Email already exists")));
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "Email already exists")));
                     session.getTransaction().rollback();
                     throw new RuntimeException(e);
                 }

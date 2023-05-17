@@ -4,10 +4,9 @@ import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -22,11 +21,11 @@ import java.io.IOException;
 public class CustomerLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        ObjectMapper objectMapper = new ObjectMapper();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jb = JsonbBuilder.create()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Customer> query = criteriaBuilder.createQuery(Customer.class);
@@ -37,9 +36,9 @@ public class CustomerLoginServlet extends HttpServlet {
 
             if (customer != null && PasswordHasher.checkPassword(password, customer.getPassword())) {
                 req.getSession().setAttribute("customer", customer.getEmail());
-                resp.getWriter().println(jb.toJson(new ResponseDTO(true, req.getContextPath()+"/auth/customer/login.jsp")));
+                resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath()+"/auth/customer/login.jsp")));
             } else {
-                resp.getWriter().println(jb.toJson(new ResponseDTO(false, "Invalid email or password")));
+                resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "Invalid email or password")));
             }
 
         } catch (Exception e) {

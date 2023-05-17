@@ -4,10 +4,9 @@ import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.EmailUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import javax.mail.MessagingException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,9 +28,10 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
         String email = req.getParameter("email");
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession(); Jsonb jb = JsonbBuilder.create()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
@@ -614,13 +614,13 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
                     }
 
                     EmailUtil.sendEmail(email, "Password Reset", message, "ceyloneseenvoy@gmail.com");
-                    resp.getWriter().print(jb.toJson(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
                 } catch (MessagingException e) {
-                    resp.getWriter().print(jb.toJson(new ResponseDTO(false, "Unable to send email")));
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "Unable to send email")));
                     throw new RuntimeException("Unable to send email");
                 }
             } else {
-                resp.getWriter().print(jb.toJson(new ResponseDTO(false, "User not found with the given email")));
+                resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "User not found with the given email")));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
