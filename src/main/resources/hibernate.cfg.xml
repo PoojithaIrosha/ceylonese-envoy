@@ -11,5 +11,6 @@
         <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" />
         <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" />
         <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.TourReview" />
+        <mapping class="com.ceyloneseenvoy.ceyloneseenvoy.model.Admin" />
     </session-factory>
 </hibernate-configuration>
