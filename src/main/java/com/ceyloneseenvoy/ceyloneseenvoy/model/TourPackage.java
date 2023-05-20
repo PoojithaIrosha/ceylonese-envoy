@@ -58,13 +58,5 @@ public class TourPackage implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "tour_package_id", referencedColumnName = "id")
-    private List<TourPackageImage> tourPackageImages = new ArrayList<>();
-
-    public List<TourPackageImage> getTourPackageImages() {
-        return tourPackageImages;
-    }
-
-    public void setTourPackageImages(TourPackageImage tourPackageImage) {
-        this.tourPackageImages.add(tourPackageImage);
-    }
+    private List<TourPackageImage> tourPackageImages;
 }

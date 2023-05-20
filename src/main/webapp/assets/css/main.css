@@ -4581,7 +4581,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .dashboard__content {
     width: 100%;
-    padding: 60px;
+    padding: 30px 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     padding-bottom: 0;
 }
 
@@ -4607,9 +4609,9 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 100;
     width: var(--dashboard-width);
     height: calc(100% - 90px);
-    padding: 30px;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding: 10px;
+    /*padding-top: 20px;*/
+    /*padding-bottom: 40px;*/
     will-change: transform;
     transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
@@ -13125,4 +13127,8 @@ table.table-5 td {
 
 .d-block {
     display: block;
+}
+
+.ck-editor__editable_inline {
+    min-height: 300px;
 }
