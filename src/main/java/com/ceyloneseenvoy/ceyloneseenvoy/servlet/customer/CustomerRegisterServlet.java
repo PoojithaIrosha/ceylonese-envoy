@@ -61,6 +61,15 @@ public class CustomerRegisterServlet extends HttpServlet {
                 resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, errorMsg)));
             } else {
 
+                Customer uniqueResult = session.createQuery("from Customer where email = :email", Customer.class)
+                        .setParameter("email", email)
+                        .uniqueResult();
+
+                if(uniqueResult != null) {
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "Email address already exists")));
+                    return;
+                }
+
                 Customer customer = new Customer(firstName, lastName, email, PasswordHasher.hashPassword(password), mobile);
                 customer.setCustomerAddress(new CustomerAddress(address, province, city, postalCode, customer));
                 session.beginTransaction();
