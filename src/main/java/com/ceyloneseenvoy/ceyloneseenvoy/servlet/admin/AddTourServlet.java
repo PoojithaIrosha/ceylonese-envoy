@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -47,17 +45,17 @@ public class AddTourServlet extends HttpServlet {
 
         if (name == null || name.isEmpty()) {
             erroMsg = "Name cannot be empty!";
-        }else if(price == null || price.isEmpty()) {
+        } else if (price == null || price.isEmpty()) {
             erroMsg = "Price cannot be empty!";
-        }else if(locations == null || locations.isEmpty()) {
+        } else if (locations == null || locations.isEmpty()) {
             erroMsg = "Locations cannot be empty!";
-        }else if(overview == null || overview.isEmpty()) {
+        } else if (overview == null || overview.isEmpty()) {
             erroMsg = "Overview cannot be empty!";
         }
 
-        if(erroMsg != null) {
+        if (erroMsg != null) {
             resp.sendRedirect(req.getContextPath() + "/admin/add-tour.jsp?error=" + erroMsg);
-        }else {
+        } else {
 
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
@@ -65,16 +63,21 @@ public class AddTourServlet extends HttpServlet {
 
                 Collection<Part> parts = req.getParts();
 
-                String uploadPath = getServletContext().getRealPath("/assets/img/tours");
+                String uploadPath = System.getProperty("user.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
+
+                File directory = new File(uploadPath);
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
 
                 List<TourPackageImage> tourPackageImages = new ArrayList<>();
 
                 for (Part part : parts) {
                     if (part.getName().equals("images") && part.getSize() > 0) {
-                        String filePath = name + UUID.randomUUID() + ".jpg";
-                        tourPackageImages.add(TourPackageImage.builder().image("assets/img/tours/" + filePath).build());
+                        String filePath = uploadPath + File.separator + name + UUID.randomUUID() + ".jpg";
+                        tourPackageImages.add(TourPackageImage.builder().image(filePath).build());
 
-                        File file = new File(uploadPath + File.separator + filePath);
+                        File file = new File(filePath);
                         try (InputStream input = part.getInputStream()) {
                             Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                         } catch (Exception e) {
@@ -83,11 +86,10 @@ public class AddTourServlet extends HttpServlet {
                     }
                 }
 
-                if (tourPackageImages.isEmpty()) {
-                    tourPackageImages.add(TourPackageImage.builder().image("assets/img/tours/default.png").build());
+                if (tourPackageImages.size() > 0) {
+                    tourPackage.setTourPackageImages(tourPackageImages);
                 }
 
-                tourPackage.setTourPackageImages(tourPackageImages);
                 try {
                     session.beginTransaction();
                     session.save(tourPackage);

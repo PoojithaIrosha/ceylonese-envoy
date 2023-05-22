@@ -28,7 +28,7 @@
     <!-- Icon -->
     <link rel="icon" href="../assets/img/logo/favicon.jpg"/>
 
-    <title>Ceylonese Envoy | Add Tour</title>
+    <title>Add Tour | Ceylonese Envoy</title>
 </head>
 <body>
 <%@include file="../includes/preloader.jsp" %>
@@ -39,7 +39,7 @@
     <%@include file="admin-sidebar.jsp" %>
 
     <div class="dashboard__main">
-        <div class="dashboard__content">
+        <div class="dashboard__content py-10 px-40">
             <div class="row y-gap-20 justify-between items-end ">
                 <div class="col-auto">
                     <h1 class="text-30 lh-14 fw-600">Add Tour Package</h1>
