@@ -9,6 +9,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
+<%@ page import="org.hibernate.query.Query" %>
+<%@ page import="java.util.Objects" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -149,7 +152,7 @@
                         <%
                             pageContext.setAttribute("df", DecimalFormatUtil.getInstance());
 
-                            int limit = 2;
+                            int limit = 10;
                             int pageNo = 1;
                             String search = "";
                             String sort = "PA";
@@ -233,9 +236,17 @@
 
                                             <div class="cardImage ratio ratio-1:1 w-250 md:w-1/1 rounded-4">
                                                 <div class="cardImage__content">
+                                                    <c:if test="${tourPackage.tourPackageImages.size() > 0}">
+                                                        <% TourPackage tp = (TourPackage) pageContext.getAttribute("tourPackage"); %>
                                                     <img class="rounded-4 col-12"
-                                                         src="${contextPath}/${tourPackage.tourPackageImages.get(0).image}"
+                                                         src="<%= ImageURIUtil.convertFileToDataURI(tp.getTourPackageImages().get(0).getImage()) %>"
                                                          alt="image">
+                                                    </c:if>
+                                                    <c:if test="${tourPackage.tourPackageImages.size() == 0}">
+                                                        <img class="rounded-4 col-12"
+                                                             src="${contextPath}/assets/img/tours/default.png"
+                                                             alt="image">
+                                                    </c:if>
                                                 </div>
                                             </div>
 
@@ -252,21 +263,53 @@
 
                                             <%-- Reviews Start --%>
                                         <div class="col-md-auto text-right md:text-left">
+                                            <%
+                                                try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                                                    TourPackage tr = (TourPackage) pageContext.getAttribute("tourPackage");
+                                                    Query query = hs.createQuery("select rating, COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id group by rating order by frequency desc").setMaxResults(1).setParameter("id", tr.getId());
+                                                    Object[] result = (Object[]) query.uniqueResult();
+
+                                                    if (result != null)
+                                                        pageContext.setAttribute("bestRating", result);
+                                                    else
+                                                        pageContext.setAttribute("bestRating", new Object[]{0, 0});
+                                                }
+                                            %>
+
                                             <div class="d-flex x-gap-5 items-center justify-end md:justify-start">
 
-                                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                                <i class="icon-star text-10 text-yellow-1"></i>
+                                                <%
+                                                    for (int i = 0; i < 5; i++) {
+                                                        Object[] bestRating = (Object[]) pageContext.getAttribute("bestRating");
+                                                        if (i < (int) bestRating[0]) {
+                                                %>
+                                                <div class="icon-star text-yellow-1 text-10"></div>
+                                                <%
+                                                } else {
+                                                %>
+                                                <div class="icon-star text-light-1 text-10"></div>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
 
                                             </div>
 
-                                            <div class="text-14 lh-14 text-light-1 mt-10">3,014 reviews</div>
+                                            <%
+                                                try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                                                    TourPackage tr = (TourPackage) pageContext.getAttribute("tourPackage");
+                                                    Query<Long> query = hs.createQuery("select COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id", Long.class).setParameter("id", tr.getId());
+                                                    Long result = query.uniqueResult();
+
+                                                    if (result != null) {
+                                                        pageContext.setAttribute("reviewCount", result);
+                                                    } else {
+                                                        pageContext.setAttribute("reviewCount", 0);
+                                                    }
+                                                }
+                                            %>
+
+                                            <div class="text-14 lh-14 text-light-1 mt-10">${reviewCount} reviews</div>
 
                                             <div class="text-14 text-light-1 mt-50 md:mt-20">From</div>
                                             <div class="text-22 lh-12 fw-600 mt-5">

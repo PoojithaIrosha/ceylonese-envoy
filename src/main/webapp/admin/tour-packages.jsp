@@ -44,7 +44,7 @@
 
 
     <div class="dashboard__main">
-        <div class="dashboard__content py-10">
+        <div class="dashboard__content py-10 px-40">
 
             <div class="row y-gap-20 justify-between items-end">
                 <div class="col-auto">

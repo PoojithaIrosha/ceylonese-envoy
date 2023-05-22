@@ -11,6 +11,8 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourReview" %>
 <%@ page import="org.hibernate.query.Query" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -186,7 +188,10 @@
                         <div class="swiper-wrapper">
                             <c:forEach items="${tourPackage.tourPackageImages}" var="image">
                                 <div class="swiper-slide">
-                                    <img src="${contextPath}/${image.image}" alt="image"
+                                    <%
+                                        TourPackageImage tpi = (TourPackageImage) pageContext.getAttribute("image");
+                                    %>
+                                    <img src="<%= ImageURIUtil.convertFileToDataURI(tpi.getImage()) %>" alt="image"
                                          class="rounded-4 col-12 h-full object-cover">
                                 </div>
                             </c:forEach>
@@ -690,8 +695,9 @@
 
                                     <div class="cardImage ratio ratio-1:1">
                                         <div class="cardImage__content">
+                                            <% TourPackage tp = (TourPackage) pageContext.getAttribute("similarTourPackage"); %>
                                             <img class="rounded-4 col-12"
-                                                 src="${similarTourPackage.tourPackageImages.get(0).image}" alt="image">
+                                                 src="<%= ImageURIUtil.convertFileToDataURI(tp.getTourPackageImages().get(0).getImage()) %>" alt="image">
                                         </div>
                                     </div>
 
