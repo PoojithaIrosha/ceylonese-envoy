@@ -5,7 +5,9 @@
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %><%--
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" %>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %><%--
   Created by IntelliJ IDEA.
   User: poojithairosha
   Date: 5/18/23
@@ -73,7 +75,7 @@
     <%@include file="admin-sidebar.jsp" %>
 
     <div class="dashboard__main">
-        <div class="dashboard__content">
+        <div class="dashboard__content py-10 px-40">
             <div class="row y-gap-20 justify-between items-end ">
                 <div class="col-auto">
                     <h1 class="text-30 lh-14 fw-600">Edit Tour Package</h1>
@@ -157,7 +159,10 @@
                                         <div class="container p-3 d-flex gap-3" id="tiContainer">
                                             <c:forEach items="${tourPackage.tourPackageImages}" var="image">
                                                 <div>
-                                                    <img src="${contextPath}/${image.image}" alt="image" width="250"
+                                                    <%
+                                                        TourPackageImage tourPackageImage = (TourPackageImage) pageContext.getAttribute("image");
+                                                    %>
+                                                    <img src="<%= ImageURIUtil.convertFileToDataURI(tourPackageImage.getImage()) %>" alt="image" width="250"
                                                          height="250">
                                                 </div>
                                             </c:forEach>
@@ -183,7 +188,7 @@
 
                                     <div class="d-grid">
                                         <button type="submit" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
-                                            Add New Tour
+                                            Update Tour
                                         </button>
                                     </div>
                                 </form>

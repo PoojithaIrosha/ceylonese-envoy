@@ -30,6 +30,13 @@
         </div>
 
         <div class="sidebar__item ">
+            <a href="all-admins.jsp" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
+                <img src="${contextPath}/assets/img/dashboard/sidebar/gear.svg" alt="image" class="mr-15">
+                Manage Admins
+            </a>
+        </div>
+
+        <div class="sidebar__item ">
             <div class="accordion -db-sidebar js-accordion">
                 <div class="accordion__item">
                     <div class="accordion__button">
@@ -60,7 +67,7 @@
         </div>
 
         <div class="sidebar__item ">
-            <a href="#" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
+            <a href="admin-logout" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
                 <img src="${contextPath}/assets/img/dashboard/sidebar/log-out.svg" alt="image" class="mr-15">
                 Logout
             </a>

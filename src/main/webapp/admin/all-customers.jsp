@@ -8,7 +8,8 @@
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.Customer" %><%--
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.Customer" %>
+<%--
   Created by IntelliJ IDEA.
   User: poojithairosha
   Date: 5/19/23
@@ -50,7 +51,7 @@
 
 
   <div class="dashboard__main">
-    <div class="dashboard__content py-10">
+    <div class="dashboard__content py-10 px-40">
 
       <div class="row y-gap-20 justify-between items-end">
         <div class="col-auto">
