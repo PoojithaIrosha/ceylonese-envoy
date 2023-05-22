@@ -56,6 +56,30 @@ public class UpdateTourServlet extends HttpServlet {
             erroMsg = "Overview cannot be empty!";
         }
 
+        if(departure == null || departure.isEmpty()) {
+            departure = null;
+        }
+
+        if(cancellation == null || cancellation.isEmpty()) {
+            cancellation = null;
+        }
+
+        if(inclusions == null || inclusions.isEmpty()) {
+            inclusions = null;
+        }
+
+        if(exclusions == null || exclusions.isEmpty()) {
+            exclusions = null;
+        }
+
+        if(highlights == null || highlights.isEmpty()) {
+            highlights = null;
+        }
+
+        if(additionalInfo == null || additionalInfo.isEmpty()) {
+            additionalInfo = null;
+        }
+
         if(erroMsg != null) {
             resp.sendRedirect(req.getContextPath() + "/admin/edit-tour.jsp?package=" + id + "&error=" + erroMsg);
         }else {
@@ -74,14 +98,20 @@ public class UpdateTourServlet extends HttpServlet {
 
                 Collection<Part> parts = req.getParts();
                 List<TourPackageImage> tourPackageImages = new ArrayList<>();
-                String uploadPath = getServletContext().getRealPath("/assets/img/tours");
+
+                String uploadPath = System.getProperty("user.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
+
+                File directory = new File(uploadPath);
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
 
                 for (Part part : parts) {
                     if (part.getName().equals("images") && part.getSize() > 0) {
-                        String filePath = name + UUID.randomUUID() + ".jpg";
-                        tourPackageImages.add(TourPackageImage.builder().image("assets/img/tours/" + filePath).build());
+                        String filePath = uploadPath + File.separator + name + UUID.randomUUID() + ".jpg";
+                        tourPackageImages.add(TourPackageImage.builder().image(filePath).build());
 
-                        File file = new File(uploadPath + File.separator + filePath);
+                        File file = new File(filePath);
                         try (InputStream input = part.getInputStream()) {
                             Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                         } catch (Exception e) {
@@ -95,6 +125,11 @@ public class UpdateTourServlet extends HttpServlet {
 
                     if (!tourPackageImages.isEmpty()) {
                         for (TourPackageImage tpi : tourPackage.getTourPackageImages()) {
+                            File file = new File(tpi.getImage());
+                            if (file.exists()) {
+                                file.delete();
+                            }
+
                             session.createQuery("delete from TourPackageImage where id = :id")
                                     .setParameter("id", tpi.getId())
                                     .executeUpdate();
