@@ -296,7 +296,7 @@
                             <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
                                 <div class="text-14 text-light-1">
                                     From <span
-                                        class="text-20 fw-500 text-dark-1 ml-5">USD ${df.format(tourPackage.price)}</span>
+                                        class="text-20 fw-500 text-dark-1 ml-5">USD ${df.format(tourPackage.price)}</span><smal>/per one person</smal>
                                 </div>
 
                                 <div class="row y-gap-20 pt-30">
@@ -337,7 +337,7 @@
 
                                     <div class="col-12">
                                         <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                                            Book Now
+                                            Make a Request
                                         </button>
                                     </div>
                                 </div>
@@ -716,27 +716,60 @@
                                     <div class="row justify-between items-center pt-15">
                                         <div class="col-auto">
                                             <div class="d-flex items-center">
-                                                <div class="d-flex items-center x-gap-5">
 
-                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <%
+                                                        try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                                                            TourPackage tr = (TourPackage) pageContext.getAttribute("similarTourPackage");
+                                                            Query query = hs.createQuery("select rating, COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id group by rating order by frequency desc").setMaxResults(1).setParameter("id", tr.getId());
+                                                            Object[] result = (Object[]) query.uniqueResult();
 
-                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                            if (result != null)
+                                                                pageContext.setAttribute("bestRating", result);
+                                                            else
+                                                                pageContext.setAttribute("bestRating", new Object[]{0, 0});
+                                                        }
+                                                    %>
 
-                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <div class="d-flex items-center x-gap-5">
 
-                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                        <%
+                                                            for (int i = 0; i < 5; i++) {
+                                                                Object[] bestRating = (Object[]) pageContext.getAttribute("bestRating");
+                                                                if (i < (int) bestRating[0]) {
+                                                        %>
+                                                        <div class="icon-star text-yellow-1 text-10"></div>
+                                                        <%
+                                                        } else {
+                                                        %>
+                                                        <div class="icon-star text-light-1 text-10"></div>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
 
-                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    </div>
 
-                                                </div>
 
-                                                <div class="text-14 text-light-1 ml-10">300 reviews</div>
+                                                <%
+                                                    try (Session session1 = HibernateUtil.getSessionFactory().openSession()) {
+                                                        TourPackage tr = (TourPackage) pageContext.getAttribute("similarTourPackage");
+                                                        Query<Long> query = session1.createQuery("select COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id", Long.class).setParameter("id", tr.getId());
+                                                        Long result = query.uniqueResult();
+
+                                                        if (result != null) {
+                                                            pageContext.setAttribute("reviewCount", result);
+                                                        } else {
+                                                            pageContext.setAttribute("reviewCount", 0);
+                                                        }
+                                                    }
+                                                %>
+                                                <div class="text-14 text-light-1 ml-10">${reviewCount} reviews</div>
                                             </div>
                                         </div>
 
                                         <div class="col-auto">
                                             <div class="text-14 text-light-1">
-                                                <span class="text-16 fw-500 text-dark-1">Rs 500,000</span>
+                                                <span class="text-16 fw-500 text-dark-1">USD ${similarTourPackage.price}</span><smal>/per one person</smal>
                                             </div>
                                         </div>
                                     </div>

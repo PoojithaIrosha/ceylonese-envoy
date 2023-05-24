@@ -528,7 +528,7 @@
 
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
-                                            <span class="text-16 fw-500 text-dark-1">USD ${df.format(tourPackage.price)}</span>
+                                            <span class="text-16 fw-500 text-dark-1">USD ${df.format(tourPackage.price)}</span><smal>/per one person</smal>
                                         </div>
                                     </div>
                                 </div>
