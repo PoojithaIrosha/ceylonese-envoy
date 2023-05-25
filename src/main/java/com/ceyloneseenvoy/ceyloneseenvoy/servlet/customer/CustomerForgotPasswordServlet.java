@@ -21,10 +21,6 @@ import java.util.UUID;
 
 @WebServlet("/auth/customer/forgot-password")
 public class CustomerForgotPasswordServlet extends HttpServlet {
-    private String smtpHost;
-    private String smtpPort;
-    private String smtpEmail;
-    private String smtpPassword;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -613,7 +609,7 @@ public class CustomerForgotPasswordServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
 
-                    EmailUtil.sendEmail(email, "Password Reset", message, "ceyloneseenvoy@gmail.com");
+                    EmailUtil.sendEmail(email, "Password Reset", message, "ceyloneseenvoy001@gmail.com");
                     resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
                 } catch (MessagingException e) {
                     resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "Unable to send email")));
