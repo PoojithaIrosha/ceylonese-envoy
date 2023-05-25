@@ -5,15 +5,10 @@
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.text.NumberFormat" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
 <%@ page import="org.hibernate.query.Query" %>
-<%@ page import="java.lang.reflect.Array" %>
-<%@ page import="java.util.Objects" %>
-<%@page contentType="text/html; ISO-8859-1" pageEncoding="UTF-8" %>
 
 <% HibernateUtil.getSessionFactory().openSession(); %>
 <!DOCTYPE html>

@@ -758,31 +758,28 @@
                       </div>
                     </div> --%>
 
-                    <%
-                        if (session.getAttribute("customer") == null) {
-                    %>
-                    <div class="d-flex items-center ml-20 is-menu-opened-hide xl:d-none">
-                        <a href="${contextPath}/auth/customer/login.jsp"
-                           class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Sign In
-                            /
-                            Register</a>
-                    </div>
-                    <%
-                        }else {
-                            %>
-                        <div class="d-flex items-center ml-20 is-menu-opened-hide xl:d-none">
-                            <a href="${contextPath}/customer"
-                               class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Go to Dashboard</a>
-                        </div>
-                        <%
-                        }
-                    %>
+<%--                    <%--%>
+<%--                        if (session.getAttribute("customer") == null) {--%>
+<%--                    %>--%>
+<%--                    <div class="d-flex items-center ml-20 is-menu-opened-hide xl:d-none">--%>
+<%--                        <a href="${contextPath}/auth/customer/login.jsp"--%>
+<%--                           class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Sign In--%>
+<%--                            /--%>
+<%--                            Register</a>--%>
+<%--                    </div>--%>
+<%--                    <%--%>
+<%--                        }else {--%>
+<%--                            %>--%>
+<%--                        <div class="d-flex items-center ml-20 is-menu-opened-hide xl:d-none">--%>
+<%--                            <a href="${contextPath}/customer"--%>
+<%--                               class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Go to Dashboard</a>--%>
+<%--                        </div>--%>
+<%--                        <%--%>
+<%--                        }--%>
+<%--                    %>--%>
 
                     <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
                          data-x-toggle="text-white">
-                        <div>
-                            <a href="login.html" class="d-flex items-center icon-customer text-inherit text-22"></a>
-                        </div>
                         <div>
                             <button class="d-flex items-center icon-menu text-inherit text-20"
                                     data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button>

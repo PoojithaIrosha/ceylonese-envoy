@@ -8,15 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="dashboard__sidebar bg-light-2 scroll-bar-1">
     <div class="sidebar -dashboard">
-        <div class="sidebar__item ">
-            <a href="index.jsp" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
-                <img src="${contextPath}/assets/img/dashboard/sidebar/compass.svg" alt="image" class="mr-15">
-                Dashboard
-            </a>
-        </div>
+        <%-- <div class="sidebar__item "> --%>
+        <%--     <a href="index.jsp" class="sidebar__button d-flex items-center text-15 lh-1 fw-500"> --%>
+        <%--         <img src="${contextPath}/assets/img/dashboard/sidebar/compass.svg" alt="image" class="mr-15"> --%>
+        <%--         Dashboard --%>
+        <%--     </a> --%>
+        <%-- </div> --%>
 
         <div class="sidebar__item ">
-            <a href="#" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
+            <a href="booking-manager.jsp" class="sidebar__button d-flex items-center text-15 lh-1 fw-500">
                 <img src="${contextPath}/assets/img/dashboard/sidebar/booking.svg" alt="image" class="mr-15">
                 Booking Manager
             </a>

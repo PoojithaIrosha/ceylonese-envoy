@@ -36,7 +36,7 @@
 
             TourPackage tourPackage = hs.createQuery(query).getSingleResult();
 
-            if(tourPackage == null) {
+            if (tourPackage == null) {
                 request.getRequestDispatcher("errors/404.jsp").forward(request, response);
             }
 
@@ -283,7 +283,7 @@
                         <c:if test="${tourPackage.highlights != null}">
                             <div class="col-12">
                                 <h5 class="text-16 fw-500">Highlights</h5>
-                               ${tourPackage.highlights}
+                                    ${tourPackage.highlights}
                             </div>
                         </c:if>
                     </div>
@@ -296,50 +296,53 @@
                             <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
                                 <div class="text-14 text-light-1">
                                     From <span
-                                        class="text-20 fw-500 text-dark-1 ml-5">USD ${df.format(tourPackage.price)}</span><smal>/per one person</smal>
+                                        class="text-20 fw-500 text-dark-1 ml-5">USD ${df.format(tourPackage.price)}</span>
+                                    <smal>/per one person</smal>
                                 </div>
 
                                 <div class="row y-gap-20 pt-30">
-                                    <div class="col-12">
+                                    <%-- <div class="col-12"> --%>
 
-                                        <div class="searchMenu-date px-20 py-10 border-light rounded-4 -right js-form-dd js-calendar">
+                                    <%--     <div class="searchMenu-date px-20 py-10 border-light rounded-4 -right js-form-dd js-calendar"> --%>
 
-                                            <div>
-                                                <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Date (From - To)</h4>
+                                    <%--         <div> --%>
+                                    <%--             <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Date (From - To)</h4> --%>
 
-                                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <label>From</label>
-                                                    <input type="date" class="form-control border mb-2"/>
+                                    <%--             <div class="text-15 text-light-1 ls-2 lh-16"> --%>
+                                    <%--                 <label>From</label> --%>
+                                    <%--                 <input type="date" class="form-control border mb-2"/> --%>
 
-                                                    <label>To</label>
-                                                    <input type="date" class="form-control border"/>
+                                    <%--                 <label>To</label> --%>
+                                    <%--                 <input type="date" class="form-control border"/> --%>
+                                    <%--             </div> --%>
+                                    <%--         </div> --%>
+                                    <%--     </div> --%>
+
+                                    <%-- </div> --%>
+
+                                    <form action="checkout.jsp">
+                                        <input type="hidden" name="package" value="${tourPackage.id}">
+                                        <div class="col-12 mb-10">
+                                            <div class="searchMenu-guests px-20 py-10 border-light rounded-4 js-form-dd js-form-counters">
+
+                                                <div>
+                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Number of members</h4>
+
+                                                    <div class="text-15 text-light-1 ls-2 lh-16">
+                                                        <input type="number" class="form-control border"
+                                                               placeholder="Ex: 5" name="members" required/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>
-
-                                    <div class="col-12">
-
-                                        <div class="searchMenu-guests px-20 py-10 border-light rounded-4 js-form-dd js-form-counters">
-
-                                            <div>
-                                                <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Number of travelers</h4>
-
-                                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                                    <input type="number" class="form-control border"
-                                                           placeholder="Ex: 5"/>
-                                                </div>
-                                            </div>
+                                        <div class="col-12">
+                                            <button type="submit"
+                                               class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                                Make a Request
+                                            </button>
                                         </div>
-
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                                            Make a Request
-                                        </button>
-                                    </div>
+                                    </form>
                                 </div>
 
                                 <div class="d-flex items-center pt-20">
@@ -697,7 +700,8 @@
                                         <div class="cardImage__content">
                                             <% TourPackage tp = (TourPackage) pageContext.getAttribute("similarTourPackage"); %>
                                             <img class="rounded-4 col-12"
-                                                 src="<%= ImageURIUtil.convertFileToDataURI(tp.getTourPackageImages().get(0).getImage()) %>" alt="image">
+                                                 src="<%= ImageURIUtil.convertFileToDataURI(tp.getTourPackageImages().get(0).getImage()) %>"
+                                                 alt="image">
                                         </div>
                                     </div>
 
@@ -717,37 +721,37 @@
                                         <div class="col-auto">
                                             <div class="d-flex items-center">
 
-                                                    <%
-                                                        try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
-                                                            TourPackage tr = (TourPackage) pageContext.getAttribute("similarTourPackage");
-                                                            Query query = hs.createQuery("select rating, COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id group by rating order by frequency desc").setMaxResults(1).setParameter("id", tr.getId());
-                                                            Object[] result = (Object[]) query.uniqueResult();
+                                                <%
+                                                    try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                                                        TourPackage tr = (TourPackage) pageContext.getAttribute("similarTourPackage");
+                                                        Query query = hs.createQuery("select rating, COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id group by rating order by frequency desc").setMaxResults(1).setParameter("id", tr.getId());
+                                                        Object[] result = (Object[]) query.uniqueResult();
 
-                                                            if (result != null)
-                                                                pageContext.setAttribute("bestRating", result);
-                                                            else
-                                                                pageContext.setAttribute("bestRating", new Object[]{0, 0});
+                                                        if (result != null)
+                                                            pageContext.setAttribute("bestRating", result);
+                                                        else
+                                                            pageContext.setAttribute("bestRating", new Object[]{0, 0});
+                                                    }
+                                                %>
+
+                                                <div class="d-flex items-center x-gap-5">
+
+                                                    <%
+                                                        for (int i = 0; i < 5; i++) {
+                                                            Object[] bestRating = (Object[]) pageContext.getAttribute("bestRating");
+                                                            if (i < (int) bestRating[0]) {
+                                                    %>
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <div class="icon-star text-light-1 text-10"></div>
+                                                    <%
+                                                            }
                                                         }
                                                     %>
 
-                                                    <div class="d-flex items-center x-gap-5">
-
-                                                        <%
-                                                            for (int i = 0; i < 5; i++) {
-                                                                Object[] bestRating = (Object[]) pageContext.getAttribute("bestRating");
-                                                                if (i < (int) bestRating[0]) {
-                                                        %>
-                                                        <div class="icon-star text-yellow-1 text-10"></div>
-                                                        <%
-                                                        } else {
-                                                        %>
-                                                        <div class="icon-star text-light-1 text-10"></div>
-                                                        <%
-                                                                }
-                                                            }
-                                                        %>
-
-                                                    </div>
+                                                </div>
 
 
                                                 <%
@@ -769,7 +773,8 @@
 
                                         <div class="col-auto">
                                             <div class="text-14 text-light-1">
-                                                <span class="text-16 fw-500 text-dark-1">USD ${similarTourPackage.price}</span><smal>/per one person</smal>
+                                                <span class="text-16 fw-500 text-dark-1">USD ${similarTourPackage.price}</span>
+                                                <smal>/per one person</smal>
                                             </div>
                                         </div>
                                     </div>

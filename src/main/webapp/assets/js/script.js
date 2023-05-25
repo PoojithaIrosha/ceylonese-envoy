@@ -131,23 +131,6 @@ function changeRatingStarOnHover(id) {
 
 }
 
-
-// function addReview() {
-//     console.log("add review called");
-//     let formData = new FormData();
-//     formData.append("name", document.getElementById("name").value);
-//     formData.append("email", document.getElementById("email").value);
-//     formData.append("comment", document.getElementById("comment").value);
-//     formData.append("packageId", document.getElementById("packageId").value);
-//     formData.append("rating", document.querySelectorAll(".fa-solid").length.toString());
-//
-//     const xhr = new XMLHttpRequest();
-//     xhr.open("post", "add-review", true);
-//     xhr.setRequestHeader("Content-Type", "multipart/form-data");
-//     xhr.send(formData);
-//     console.log("form sent");
-// }
-
 $("#addReviewForm").submit((event) => {
     event.preventDefault();
 
@@ -183,4 +166,3 @@ $("#addReviewForm").submit((event) => {
         }
     })
 });
-
