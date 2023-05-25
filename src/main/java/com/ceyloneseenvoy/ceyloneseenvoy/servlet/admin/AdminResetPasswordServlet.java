@@ -1,7 +1,7 @@
-package com.ceyloneseenvoy.ceyloneseenvoy.servlet.customer;
+package com.ceyloneseenvoy.ceyloneseenvoy.servlet.admin;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
+import com.ceyloneseenvoy.ceyloneseenvoy.model.Admin;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/auth/customer/reset-password")
-public class CustomerResetPasswordServlet extends HttpServlet {
+@WebServlet("/auth/admin/reset-password")
+public class AdminResetPasswordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,23 +30,20 @@ public class CustomerResetPasswordServlet extends HttpServlet {
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 session.beginTransaction();
 
-                Customer customer = session.createQuery("from Customer where email = :email and verificationCode = :uuid", Customer.class)
-                        .setParameter("email", email)
-                        .setParameter("uuid", uuid)
-                        .uniqueResult();
+                Admin admin = session.createQuery("from Admin where email = :email and verificationCode = :vc", Admin.class).setParameter("email", email).setParameter("vc", uuid).uniqueResult();
 
-                if (customer != null) {
-                    customer.setPassword(PasswordHasher.hashPassword(password));
-                    customer.setVerificationCode(null);
+                if (admin != null) {
+                    admin.setPassword(PasswordHasher.hashPassword(password));
+                    admin.setVerificationCode(null);
                     try {
-                        session.update(customer);
+                        session.update(admin);
                         session.getTransaction().commit();
                     } catch (Exception e) {
                         session.getTransaction().commit();
                         throw new RuntimeException(e);
                     }
 
-                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath() + "/auth/customer/login.jsp")));
+                    resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath() + "/auth/admin/login.jsp")));
                 } else {
                     resp.getWriter().print(objectMapper.writeValueAsString(new ResponseDTO(false, "Invalid email or verification code")));
                 }

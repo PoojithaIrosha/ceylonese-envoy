@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @WebServlet(name = "DeleteAdminServlet", value = "/admin/delete-admin")
 public class DeleteAdminServlet extends HttpServlet {
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();

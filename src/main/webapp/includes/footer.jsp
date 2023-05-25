@@ -51,7 +51,7 @@
           <h5 class="text-16 fw-500 mb-30">Company</h5>
           <div class="d-flex y-gap-10 flex-column">
             <a href="#">About Us</a>
-            <a href="#">Blog</a>
+            <a href="#">Contact Us</a>
           </div>
         </div>
 
@@ -62,17 +62,6 @@
             <a href="#">Legal Notice</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms and Conditions</a>
-          </div>
-        </div>
-
-        <div class="col-xl-2 col-lg-4 col-sm-6">
-          <h5 class="text-16 fw-500 mb-30">Other Services</h5>
-          <div class="d-flex y-gap-10 flex-column">
-            <a href="#">Car hire</a>
-            <a href="#">Activity Finder</a>
-            <a href="#">Tour List</a>
-            <a href="#">Holiday Rental</a>
-            <a href="#">Travel Agents</a>
           </div>
         </div>
 

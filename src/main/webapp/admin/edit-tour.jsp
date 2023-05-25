@@ -5,15 +5,8 @@
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %><%--
-  Created by IntelliJ IDEA.
-  User: poojithairosha
-  Date: 5/18/23
-  Time: 10:56 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getParameter("package") != null) {

@@ -1,21 +1,12 @@
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page import="org.hibernate.Session" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil" %>
 <%@ page import="javax.persistence.criteria.Predicate" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" %>
 <%@ page import="javax.persistence.criteria.CriteriaBuilder" %>
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.Customer" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: poojithairosha
-  Date: 5/19/23
-  Time: 1:14 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

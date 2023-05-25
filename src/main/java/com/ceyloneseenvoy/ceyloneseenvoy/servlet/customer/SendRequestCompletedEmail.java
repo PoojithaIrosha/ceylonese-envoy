@@ -21,8 +21,8 @@ public class SendRequestCompletedEmail extends HttpServlet {
         String name = req.getParameter("name");
 
         try {
-            EmailUtil.sendEmail(email, "Request Completed", "Dear " + name + ",<br/><br/>Your request has been completed.<br/><br/>Thank you,<br/>Ceylonese Envoy", "ceyloneseenvoy001@gmail.com");
-
+            EmailUtil.sendEmail(email, "Request Completed", "Dear " + name + ",<br/><br/>We received your request. Our team will contact you soon.<br/><br/>Thank you,<br/>Ceylonese Envoy", "ceyloneseenvoy001@gmail.com");
+            EmailUtil.sendEmail("ceyloneseenvoy001@gmail.com", "New Customer Request", "Dear Admin,<br/><br/>A new customer request has been added.<br/><br/>Thank you,<br/>Ceylonese Envoy", "ceyloneseenvoy001@gmail.com");
             resp.getWriter().print(mapper.writeValueAsString(ResponseDTO.builder().status(true).message("Email sent successfully").build()));
         } catch (Exception e) {
             resp.getWriter().print(mapper.writeValueAsString(ResponseDTO.builder().status(false).message("Something went wrong").build()));

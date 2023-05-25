@@ -11,15 +11,7 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
 <%@ page import="org.hibernate.query.Query" %>
-<%@ page import="java.util.Objects" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: poojithairosha
-  Date: 5/11/23
-  Time: 6:02 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -49,7 +41,6 @@
 <%@include file="includes/preloader.jsp" %>
 <main>
     <%@include file="includes/header-light.jsp" %>
-
 
     <section class="pt-40 pb-40 bg-light-2">
         <div class="container">
@@ -112,39 +103,6 @@
     <section class="layout-pt-md layout-pb-lg">
         <div class="container">
             <div class="row y-gap-30">
-                 <%-- <div class="col-xl-3 col-lg-4 lg:d-none"> --%>
-                 <%--     <aside class="sidebar y-gap-40"> --%>
-
-                 <%--         <div class="sidebar__item"> --%>
-                 <%--             <h3>Filters</h3> --%>
-                 <%--         </div> --%>
-
-                 <%--         <div class="sidebar__item pb-30"> --%>
-                 <%--             <h5 class="text-18 fw-500 mb-10">Price</h5> --%>
-                 <%--             <div class="row x-gap-10 y-gap-30"> --%>
-                 <%--                 <div class="col-12"> --%>
-                 <%--                     <div class="js-price-rangeSlider"> --%>
-                 <%--                         <div class="text-14 fw-500"></div> --%>
-
-                 <%--                         <div class="d-flex justify-between mb-20"> --%>
-                 <%--                             <div class="text-15 text-dark-1"> --%>
-                 <%--                                 <span class="js-lower"></span> --%>
-                 <%--                                 - --%>
-                 <%--                                 <span class="js-upper"></span> --%>
-                 <%--                             </div> --%>
-                 <%--                         </div> --%>
-
-                 <%--                         <div class="px-5"> --%>
-                 <%--                             <div class="js-slider"></div> --%>
-                 <%--                         </div> --%>
-                 <%--                     </div> --%>
-                 <%--                 </div> --%>
-                 <%--             </div> --%>
-                 <%--         </div> --%>
-
-                 <%--     </aside> --%>
-                 <%-- </div>  --%>
-
                 <div class="col-12">
 
                     <div class=" row y-gap-30">
@@ -209,11 +167,6 @@
                                         .setFirstResult((pageNo > 0 ? pageNo - 1 : 0) * limit)
                                         .setMaxResults(limit)
                                         .getResultList();
-
-                                // List<TourPackage> tourPackages = hs.createQuery("from TourPackage", TourPackage.class)
-                                //         .setFirstResult((pageNo > 0 ? pageNo - 1 : 0) * limit)
-                                //         .setMaxResults(limit)
-                                //         .getResultList();
 
                                 pageContext.setAttribute("pageNo", pageNo);
                                 pageContext.setAttribute("tourPackages", tourPackages);

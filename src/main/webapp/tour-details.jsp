@@ -14,27 +14,16 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.ImageURIUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: poojithairosha
-  Date: 5/10/23
-  Time: 11:27 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
-
     if (request.getParameter("package") != null) {
         String packageId = request.getParameter("package");
 
         try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder criteriaBuilder = hs.getCriteriaBuilder();
-            CriteriaQuery<TourPackage> query = criteriaBuilder.createQuery(TourPackage.class);
-            Root<TourPackage> root = query.from(TourPackage.class);
-            query.select(root).where(criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), packageId), criteriaBuilder.equal(root.get("isActive"), IsActive.ACTIVE)));
-
-            TourPackage tourPackage = hs.createQuery(query).getSingleResult();
+            TourPackage tourPackage = hs.createQuery("from TourPackage where id = :id and isActive = :isActive", TourPackage.class)
+                    .setParameter("id", Long.parseLong(packageId))
+                    .setParameter("isActive", IsActive.ACTIVE)
+                    .getSingleResult();
 
             if (tourPackage == null) {
                 request.getRequestDispatcher("errors/404.jsp").forward(request, response);
@@ -49,7 +38,6 @@
     } else {
         request.getRequestDispatcher("errors/404.jsp").forward(request, response);
     }
-
 
 %>
 
@@ -209,52 +197,6 @@
                         </div>
                     </div>
 
-                    <%-- <h3 class="text-22 fw-500 mt-30"> --%>
-                    <%--     Tour snapshot --%>
-                    <%-- </h3> --%>
-
-                    <%-- <div class="row y-gap-30 justify-between pt-20"> --%>
-
-                    <%--     <div class="col-md-auto col-6"> --%>
-                    <%--         <div class="d-flex"> --%>
-                    <%--             <i class="icon-clock text-22 text-blue-1 mr-10"></i> --%>
-                    <%--             <div class="text-15 lh-15"> --%>
-                    <%--                 Duration:<br> 11 days --%>
-                    <%--             </div> --%>
-                    <%--         </div> --%>
-                    <%--     </div> --%>
-
-                    <%--     <div class="col-md-auto col-6"> --%>
-                    <%--         <div class="d-flex"> --%>
-                    <%--             <i class="icon-customer text-22 text-blue-1 mr-10"></i> --%>
-                    <%--             <div class="text-15 lh-15"> --%>
-                    <%--                 Group size:<br> ANY --%>
-                    <%--             </div> --%>
-                    <%--         </div> --%>
-                    <%--     </div> --%>
-
-                    <%--     <div class="col-md-auto col-6"> --%>
-                    <%--         <div class="d-flex"> --%>
-                    <%--             <i class="icon-route text-22 text-blue-1 mr-10"></i> --%>
-                    <%--             <div class="text-15 lh-15"> --%>
-                    <%--                 Near public<br> transportation --%>
-                    <%--             </div> --%>
-                    <%--         </div> --%>
-                    <%--     </div> --%>
-
-                    <%--     <div class="col-md-auto col-6"> --%>
-                    <%--         <div class="d-flex"> --%>
-                    <%--             <i class="icon-access-denied text-22 text-blue-1 mr-10"></i> --%>
-                    <%--             <div class="text-15 lh-15"> --%>
-                    <%--                 Free cancellation <br><a href='#' class='text-blue-1 underline'>Learn more</a> --%>
-                    <%--             </div> --%>
-                    <%--         </div> --%>
-                    <%--     </div> --%>
-
-                    <%-- </div> --%>
-
-                    <%-- <div class="border-top-light mt-40 mb-40"></div> --%>
-
                     <div class="row x-gap-40 y-gap-40 mt-5">
                         <div class="col-12">
                             <h3 class="text-22 fw-900 mb-3">Overview</h3>
@@ -301,24 +243,6 @@
                                 </div>
 
                                 <div class="row y-gap-20 pt-30">
-                                    <%-- <div class="col-12"> --%>
-
-                                    <%--     <div class="searchMenu-date px-20 py-10 border-light rounded-4 -right js-form-dd js-calendar"> --%>
-
-                                    <%--         <div> --%>
-                                    <%--             <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Date (From - To)</h4> --%>
-
-                                    <%--             <div class="text-15 text-light-1 ls-2 lh-16"> --%>
-                                    <%--                 <label>From</label> --%>
-                                    <%--                 <input type="date" class="form-control border mb-2"/> --%>
-
-                                    <%--                 <label>To</label> --%>
-                                    <%--                 <input type="date" class="form-control border"/> --%>
-                                    <%--             </div> --%>
-                                    <%--         </div> --%>
-                                    <%--     </div> --%>
-
-                                    <%-- </div> --%>
 
                                     <form action="checkout.jsp">
                                         <input type="hidden" name="package" value="${tourPackage.id}">
@@ -383,10 +307,6 @@
 
                                 <ul class="list-disc">
                                         ${tourPackage.inclusions}
-                                        <%-- <li>Superior Coach, Wi-Fi and USB Charging On-board</li> --%>
-                                        <%-- <li>Expert guide</li> --%>
-                                        <%-- <li>Admission to Windsor Castle (if option selected)</li> --%>
-                                        <%-- <li>Admission to Stonehenge</li> --%>
                                 </ul>
                             </div>
                         </c:if>
@@ -396,10 +316,6 @@
                                 <div class="fw-500 mb-10">Departure details</div>
                                 <div class="text-15">
                                         ${tourPackage.departureDetails}
-                                        <%-- Departures from 01st April 2022: Tour departs at 8 am (boarding at 7.30 am), --%>
-                                        <%-- Victoria --%>
-                                        <%-- Coach --%>
-                                        <%-- Station Gate 1-5 --%>
                                 </div>
                             </div>
                         </c:if>
@@ -408,9 +324,6 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="fw-500 mb-10">Exclusions</div>
                                 <ul class="list-disc">
-                                        <%-- <li>Hotel pick-up and drop-off</li> --%>
-                                        <%-- <li>Gratuities</li> --%>
-                                        <%-- <li>Lunch</li> --%>
                                         ${tourPackage.exclusions}
                                 </ul>
                             </div>
@@ -419,25 +332,6 @@
                         <c:if test="${tourPackage.additionalInformation != null}">
                             <div class="col-12">
                                 <div class="fw-500 mb-10">Additional information</div>
-                                    <%-- <ul class="list-disc"> --%>
-                                    <%--     <li>Confirmation will be received at time of booking</li> --%>
-                                    <%--     <li>Departs at 8am (boarding at 7.30am), Victoria Coach Station Gate 1-5, 164 --%>
-                                    <%--         Buckingham --%>
-                                    <%--         Palace Road, London, SW1W 9TP --%>
-                                    <%--     </li> --%>
-                                    <%--     <li>As Windsor Castle is a working royal palace, sometimes the entire Castle or the --%>
-                                    <%--         State --%>
-                                    <%--         Apartments within the Castle need to be closed at short notice. (if selected --%>
-                                    <%--         this --%>
-                                    <%--         option) --%>
-                                    <%--     </li> --%>
-                                    <%--     <li>Stonehenge is closed on 21 June due to the Summer Solstice. During this time, we --%>
-                                    <%--         will --%>
-                                    <%--         instead visit the Avebury Stone Circle. --%>
-                                    <%--     </li> --%>
-                                    <%--     <li>Please note: the tour itinerary and order may change</li> --%>
-                                    <%-- </ul> --%>
-
                                     ${tourPackage.additionalInformation}
                             </div>
                         </c:if>

@@ -7,9 +7,6 @@ import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,12 +24,9 @@ public class CustomerLoginServlet extends HttpServlet {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Customer> query = criteriaBuilder.createQuery(Customer.class);
-            Root<Customer> root = query.from(Customer.class);
-
-            query.select(root).where(criteriaBuilder.equal(root.get("email"), email));
-            Customer customer = session.createQuery(query).uniqueResult();
+            Customer customer = session.createQuery("from Customer where email = :email", Customer.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
 
             if (customer != null && PasswordHasher.checkPassword(password, customer.getPassword())) {
                 req.getSession().setAttribute("customer", customer.getEmail());

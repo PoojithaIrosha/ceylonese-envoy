@@ -82,7 +82,7 @@ function renderTable(dataList) {
                 <td>${data.mobile}</td>
                 <td>${data.total}</td>
                 <td>${data.requestedAt}</td>
-                 <td><a href="booking-view.jsp?req=${data.id}" class="btn btn-sm btn-primary">VIEW</a></td>
+                 <td><a href="booking-view.jsp?req=${data.id}" class="btn btn-sm btn-dark">VIEW</a></td>
             </tr>`;
         tbody.append(row);
     });

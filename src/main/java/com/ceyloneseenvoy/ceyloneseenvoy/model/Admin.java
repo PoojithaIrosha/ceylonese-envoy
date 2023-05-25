@@ -24,4 +24,6 @@ public class Admin implements Serializable {
     @Enumerated(EnumType.STRING)
     private IsActive status;
 
+    @Column(name = "verification_code", columnDefinition = "TEXT")
+    private String verificationCode;
 }

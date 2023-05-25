@@ -2,16 +2,12 @@ package com.ceyloneseenvoy.ceyloneseenvoy.servlet.admin;
 
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Admin;
-import com.ceyloneseenvoy.ceyloneseenvoy.model.Customer;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +27,7 @@ public class AdminLoginServlet extends HttpServlet {
 
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Admin> query = criteriaBuilder.createQuery(Admin.class);
-            Root<Admin> root = query.from(Admin.class);
-
-            query.select(root).where(criteriaBuilder.equal(root.get("email"), email));
-            Admin admin = session.createQuery(query).uniqueResult();
+            Admin admin = session.createQuery("from Admin where email = :email", Admin.class).setParameter("email", email).uniqueResult();
 
             if(admin == null) {
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "No account found with this email. Please register first.")));

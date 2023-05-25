@@ -1,9 +1,6 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil" %>
 <%@ page import="org.hibernate.Session" %>
-<%@ page import="javax.persistence.criteria.CriteriaBuilder" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" %>
-<%@ page import="javax.persistence.criteria.CriteriaQuery" %>
-<%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
@@ -109,40 +106,6 @@
                                         </div>
                                     </form>
                                 </div>
-
-                                <%-- <div class="mainSearch -col-3-big bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 mt-30"> --%>
-
-
-                                <%--     <form action="tour-list.jsp" class="searchMenuCustom m-0 p-0"> --%>
-                                <%--         <div hidden="hidden"> --%>
-                                <%--             <input name="page" type="text" hidden="hidden" --%>
-                                <%--                    value="<%= (request.getParameter("page") != null && !request.getParameter("page").equals("") && Integer.parseInt(request.getParameter("page")) > 0) ? request.getParameter("page") : "1"%>"> --%>
-                                <%--         </div> --%>
-                                <%--         <div class="col pr-30 pl-10 lg:py-20 lg:px-0"> --%>
-                                <%--             <div> --%>
-                                <%--                 <div class="ml-10"> --%>
-                                <%--                     <h4 class="text-15 fw-500 ls-2 lh-16"><i --%>
-                                <%--                             class="icon-location-2 text-20 text-light-1 mt-5"></i> Location</h4> --%>
-                                <%--                     <div class="text-15 text-light-1 ls-2 lh-16"> --%>
-                                <%--                         <% --%>
-                                <%--                             if (request.getParameter("search") != null && !request.getParameter("search").equals("")) { --%>
-                                <%--                                 pageContext.setAttribute("search", request.getParameter("search")); --%>
-                                <%--                             } --%>
-                                <%--                         %> --%>
-                                <%--                         <input name="search" type="search" placeholder="Where are you going?" --%>
-                                <%--                                value="${search}"/> --%>
-                                <%--                     </div> --%>
-                                <%--                 </div> --%>
-                                <%--             </div> --%>
-                                <%--         </div> --%>
-                                <%--         <div> --%>
-                                <%--             <button class="mainSearch__submit button -dark-1 py-15 px-40 col-12 rounded-4 bg-blue-1 text-white"> --%>
-                                <%--                 <i class="icon-search text-20 mr-10"></i> --%>
-                                <%--                 Search --%>
-                                <%--             </button> --%>
-                                <%--         </div> --%>
-                                <%--     </form> --%>
-                                <%-- </div> --%>
                             </div>
                         </div>
                     </div>
@@ -417,16 +380,7 @@
                     pageContext.setAttribute("df", DecimalFormatUtil.getInstance());
 
                     try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
-                        CriteriaBuilder criteriaBuilder = hs.getCriteriaBuilder();
-                        CriteriaQuery<TourPackage> query = criteriaBuilder.createQuery(TourPackage.class);
-                        Root<TourPackage> root = query.from(TourPackage.class);
-                        query.select(root);
-                        query.where(criteriaBuilder.equal(root.get("isActive"), IsActive.ACTIVE));
-                        query.orderBy(criteriaBuilder.desc(root.get("id")));
-
-                        List<TourPackage> tourPackages = hs.createQuery(query)
-                                .setMaxResults(4)
-                                .getResultList();
+                        List<TourPackage> tourPackages = hs.createQuery("from TourPackage where isActive = :isActive order by id desc", TourPackage.class).setParameter("isActive", IsActive.ACTIVE).setMaxResults(4).getResultList();
                         pageContext.setAttribute("tourPackages", tourPackages);
                     }
                 %>

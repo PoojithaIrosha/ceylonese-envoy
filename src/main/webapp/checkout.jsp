@@ -4,13 +4,7 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage" %>
 <%@ page import="javax.persistence.criteria.Root" %>
 <%@ page import="javax.persistence.criteria.CriteriaQuery" %>
-<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %><%--
-  Created by IntelliJ IDEA.
-  User: poojithairosha
-  Date: 5/24/23
-  Time: 3:42 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
