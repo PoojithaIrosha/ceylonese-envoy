@@ -1,7 +1,7 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
 import {getDatabase, set, ref} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-
+import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 const firebaseConfig = {
     apiKey: "AIzaSyDUVHsSnSqNhBIVDKyb_5jSDVCMtO-jmu8",
     authDomain: "test-project-a74b6.firebaseapp.com",
@@ -14,9 +14,47 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 const analytics = getAnalytics(app);
-const db = getDatabase(app);
+
+
+$("#adminLoginForm").submit((event) => {
+    event.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: "login",
+        async: true,
+        data: $("#adminLoginForm").serialize(),
+        success: (response) => {
+            let json = JSON.parse(response);
+            console.log(json);
+
+            if (json.status) {
+                localStorage.setItem("authToken", json.message);
+                signInWithCustomToken(auth, json.message).then((userCredential) => {
+                    window.location = "../../admin";
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                });
+            } else {
+                $("#adminLoginError").html(json.message);
+            }
+        },
+        error: (error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            });
+        }
+    })
+});
 
 $("#checkoutForm").submit((event) => {
     event.preventDefault();
@@ -85,46 +123,59 @@ $("#checkoutForm").submit((event) => {
         return;
     }
 
-    set(ref(db, 'requests/' + Date.now()), data).then(() => {
+    $.ajax({
+        type: "GET",
+        url: "generate-custom-token",
+        async: true,
+        success: (response) => {
+            signInWithCustomToken(auth, response).then((userCredential) => {
+                const db = getDatabase();
+                set(ref(db, 'requests/' + Date.now()), data).then(() => {
 
-        let form = new FormData();
-        form.append("name", data.firstName + " " + data.lastName);
-        form.append("email", data.email);
+                    let form = new FormData();
+                    form.append("name", data.firstName + " " + data.lastName);
+                    form.append("email", data.email);
 
-        $.ajax({
-            url: "request-completed-email",
-            type: "POST",
-            data: "name=" + data.firstName + " " + data.lastName + "&email=" + data.email,
-            success: function (response) {
-                let json = JSON.parse(response);
-                if (json.status) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Request Submitted',
-                        text: 'Your request has been submitted successfully. We will contact you soon.',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location = "index.jsp";
+                    $.ajax({
+                        url: "request-completed-email",
+                        type: "POST",
+                        data: "name=" + data.firstName + " " + data.lastName + "&email=" + data.email,
+                        async: true,
+                        success: function (response) {
+                            let json = JSON.parse(response);
+                            if (json.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Request Submitted',
+                                    text: 'Your request has been submitted successfully. We will contact you soon.',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location = "index.jsp";
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Request Failed',
+                                    text: 'Something went wrong. Please try again later.',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location = "index.jsp";
+                                    }
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Request Failed',
-                        text: 'Something went wrong. Please try again later.',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location = "index.jsp";
-                        }
-                    });
-                }
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
-    });
+                    })
+                });
+            });
+        }
+    })
+
+
 
 });

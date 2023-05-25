@@ -3,6 +3,7 @@ package com.ceyloneseenvoy.ceyloneseenvoy.servlet.admin;
 import com.ceyloneseenvoy.ceyloneseenvoy.dto.ResponseDTO;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.Admin;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive;
+import com.ceyloneseenvoy.ceyloneseenvoy.util.GenerateCustomToken;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.PasswordHasher;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,13 +30,17 @@ public class AdminLoginServlet extends HttpServlet {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Admin admin = session.createQuery("from Admin where email = :email", Admin.class).setParameter("email", email).uniqueResult();
 
-            if(admin == null) {
+            if (admin == null) {
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "No account found with this email. Please register first.")));
             } else if (admin.getStatus() == IsActive.INACTIVE) {
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "Your account is not active. Please contact the administrator.")));
             } else if (PasswordHasher.checkPassword(password, admin.getPassword())) {
                 req.getSession().setAttribute("admin", admin.getEmail());
-                resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(true, req.getContextPath() + "/auth/admin/login.jsp")));
+
+                // Generate custom token
+                String customToken = GenerateCustomToken.generateToken();
+                System.out.println("Custom token: " + customToken);
+                resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(true, customToken)));
             } else {
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "Invalid email or password")));
             }

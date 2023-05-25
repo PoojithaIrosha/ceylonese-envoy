@@ -93,6 +93,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="../../assets/js/vendors.js"></script>
 <script src="../../assets/js/main.js"></script>
-<script src="../../assets/js/admin.js"></script>
+<script type="module" src="../../assets/js/firebase.js"></script>
 </body>
 </html>

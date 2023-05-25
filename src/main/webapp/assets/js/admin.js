@@ -1,31 +1,30 @@
-$("#adminLoginForm").submit((event) => {
-    event.preventDefault();
-
-    $.ajax({
-        type: "POST",
-        url: "login",
-        async: true,
-        data: $("#adminLoginForm").serialize(),
-        success: (response) => {
-            let json = JSON.parse(response);
-            console.log(json);
-
-            if (json.status) {
-                window.location.href = json.message;
-            } else {
-                $("#adminLoginError").html(json.message);
-            }
-        },
-        error: (error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            });
-        }
-    })
-
-})
+// $("#adminLoginForm").submit((event) => {
+//     event.preventDefault();
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "login",
+//         async: true,
+//         data: $("#adminLoginForm").serialize(),
+//         success: (response) => {
+//             let json = JSON.parse(response);
+//             console.log(json);
+//
+//             if (json.status) {
+//                 window.location.href = json.message;
+//             } else {
+//                 $("#adminLoginError").html(json.message);
+//             }
+//         },
+//         error: (error) => {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Oops...',
+//                 text: 'Something went wrong!',
+//             });
+//         }
+//     })
+// })
 
 function selectTourImages() {
     let files = document.getElementById("images").files;
