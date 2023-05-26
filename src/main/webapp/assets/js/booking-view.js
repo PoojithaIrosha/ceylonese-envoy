@@ -55,8 +55,6 @@ document.body.onload = function () {
                 $tbody.append(row);
 
                 document.getElementById("loading-container").style.display = "none";
-
-                console.log(snapshot.val());
             } else {
                 console.log("No data available");
             }

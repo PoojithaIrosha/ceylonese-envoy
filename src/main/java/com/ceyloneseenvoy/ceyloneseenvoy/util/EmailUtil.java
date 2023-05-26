@@ -1,8 +1,8 @@
 package com.ceyloneseenvoy.ceyloneseenvoy.util;
 
 
-import javax.mail.*;
-import javax.mail.internet.*;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
 import java.util.Date;
 import java.util.Properties;
 

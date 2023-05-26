@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  mysqldb:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ceylonese_envoy
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+  webapp:
+    build: .
+    container_name: webapp
+    restart: always
+    ports:
+      - "80:8080"
+    volumes:
+      - /Users/poojithairosha/ceylonese-envoy:/usr/local/tomcat/ceylonese-envoy
+    depends_on:
+      - mysqldb
+volumes:
+  mysql-data:

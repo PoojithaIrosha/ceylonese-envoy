@@ -65,12 +65,13 @@ public class AddTourServlet extends HttpServlet {
 
                 Collection<Part> parts = req.getParts();
 
-                String uploadPath = System.getProperty("user.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
+                String uploadPath = System.getProperty("catalina.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
 
                 File directory = new File(uploadPath);
                 if (!directory.exists()) {
                     directory.mkdirs();
                 }
+                System.out.println("uploadPath: " + uploadPath);
 
                 List<TourPackageImage> tourPackageImages = new ArrayList<>();
 

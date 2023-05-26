@@ -10,6 +10,8 @@
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive" %>
 <%@ page import="com.ceyloneseenvoy.ceyloneseenvoy.util.DecimalFormatUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <!-- Required meta tags -->
@@ -66,8 +68,10 @@
                             <div class="overflow-scroll scroll-bar-1">
 
                                 <form action="tour-packages.jsp" class="py-2 d-flex gap-4">
-                                    <input type="hidden" name="page" value="<%= (request.getParameter("page") != null && !request.getParameter("page").equals("") && Integer.parseInt(request.getParameter("page")) > 0) ? request.getParameter("page") : "1"%>">
-                                    <input type="text" name="search" class="border ps-3" placeholder="Search..." value="${search}">
+                                    <input type="hidden" name="page"
+                                           value="<%= (request.getParameter("page") != null && !request.getParameter("page").equals("") && Integer.parseInt(request.getParameter("page")) > 0) ? request.getParameter("page") : "1"%>">
+                                    <input type="text" name="search" class="border ps-3" placeholder="Search..."
+                                           value="${search}">
                                     <button type="submit" class="btn btn-warning">SEARCH</button>
                                 </form>
 
@@ -133,8 +137,15 @@
                                                     .setMaxResults(limit)
                                                     .getResultList();
 
-                                            pageContext.setAttribute("pageNo", pageNo);
-                                            pageContext.setAttribute("tourPackages", tourPackages);
+                                            if (tourPackages != null) {
+                                                System.out.println(tourPackages);
+                                                pageContext.setAttribute("pageNo", pageNo);
+                                                pageContext.setAttribute("tourPackages", tourPackages);
+                                            } else {
+                                                request.getRequestDispatcher("errors/404.jsp").forward(request, response);
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
                                     %>
 
@@ -144,58 +155,63 @@
                                         </tr>
                                     </c:if>
 
-                                    <c:forEach items="${tourPackages}" var="package">
-                                        <tr>
-                                            <td>${package.id}</td>
-                                            <td class="text-blue-1 fw-500">${package.name}</td>
-                                            <td>USD ${df.format(package.price)}</td>
-                                            <td>
-                                                <span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">${package.isActive}</span>
-                                            </td>
-                                            <td>
-                                                <div class="row x-gap-10 y-gap-10 items-center">
+                                    <%
+                                        List<TourPackage> tourPackagesList = (List<TourPackage>) pageContext.getAttribute("tourPackages");
+                                        for (TourPackage tp : tourPackagesList) {
+                                    %>
+                                    <tr>
+                                        <td><%= tp.getId() %></td>
+                                        <td class="text-blue-1 fw-500"><%= tp.getName() %></td>
+                                        <td>USD <%= DecimalFormatUtil.getInstance().format(tp.getPrice()) %></td>
+                                        <td>
+                                            <span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3"><%=tp.getIsActive()%></span>
+                                        </td>
+                                        <td>
+                                            <div class="row x-gap-10 y-gap-10 items-center">
 
-                                                    <div class="col-auto">
-                                                        <a href="${contextPath}/tour-details.jsp?package=${package.id}"
-                                                           target="_blank"
-                                                           class="flex-center bg-light-2 rounded-4 size-35">
-                                                            <i class="icon-eye text-16 text-light-1"></i>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="col-auto">
-                                                        <a href="edit-tour.jsp?package=${package.id}"
-                                                           class="flex-center bg-light-2 rounded-4 size-35">
-                                                            <i class="icon-edit text-16 text-light-1"></i>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="col-auto">
-
-                                                        <%
-                                                            TourPackage pkg = (TourPackage) pageContext.getAttribute("package");
-                                                            if (pkg.getIsActive() == IsActive.ACTIVE) {
-                                                        %>
-                                                        <button onclick="changePackageStatus(${package.id})" class="flex-center bg-light-2 rounded-4 size-35">
-                                                            <i class="icon-access-denied fw-bold text-16 text-light-1"></i>
-                                                        </button>
-                                                        <%
-                                                        } else {
-                                                        %>
-                                                        <button onclick="changePackageStatus(${package.id})" class="flex-center bg-light-2 rounded-4 size-35">
-                                                            <i class="icon-check text-16 text-light-1"></i>
-                                                        </button>
-                                                        <%
-                                                            }
-                                                        %>
-
-
-                                                    </div>
-
+                                                <div class="col-auto">
+                                                    <a href="${contextPath}/tour-details.jsp?package=<%= tp.getId() %>"
+                                                       target="_blank"
+                                                       class="flex-center bg-light-2 rounded-4 size-35">
+                                                        <i class="icon-eye text-16 text-light-1"></i>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+
+                                                <div class="col-auto">
+                                                    <a href="edit-tour.jsp?package=<%= tp.getId() %>"
+                                                       class="flex-center bg-light-2 rounded-4 size-35">
+                                                        <i class="icon-edit text-16 text-light-1"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-auto">
+
+                                                    <%
+                                                        if (tp.getIsActive() == IsActive.ACTIVE) {
+                                                    %>
+                                                    <button onclick="changePackageStatus(<%= tp.getId() %>)"
+                                                            class="flex-center bg-light-2 rounded-4 size-35">
+                                                        <i class="icon-access-denied fw-bold text-16 text-light-1"></i>
+                                                    </button>
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <button onclick="changePackageStatus(<%= tp.getId() %>)"
+                                                            class="flex-center bg-light-2 rounded-4 size-35">
+                                                        <i class="icon-check text-16 text-light-1"></i>
+                                                    </button>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <%
+                                        }
+
+                                    %>
                                     </tbody>
                                 </table>
                             </div>

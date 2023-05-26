@@ -22,6 +22,7 @@ const analytics = getAnalytics(app);
 
 $("#adminLoginForm").submit((event) => {
     event.preventDefault();
+    document.getElementById("loading-container").style.display = "block";
 
     $.ajax({
         type: "POST",
@@ -29,12 +30,15 @@ $("#adminLoginForm").submit((event) => {
         async: true,
         data: $("#adminLoginForm").serialize(),
         success: (response) => {
+
             let json = JSON.parse(response);
-            console.log(json);
 
             if (json.status) {
                 localStorage.setItem("authToken", json.message);
+                $("#adminLoginError").html("");
+
                 signInWithCustomToken(auth, json.message).then((userCredential) => {
+                    document.getElementById("loading-container").style.display = "none";
                     window.location = "../../admin";
                 }).catch((error) => {
                     const errorCode = error.code;
@@ -43,6 +47,7 @@ $("#adminLoginForm").submit((event) => {
                     console.log(errorMessage);
                 });
             } else {
+                document.getElementById("loading-container").style.display = "none";
                 $("#adminLoginError").html(json.message);
             }
         },

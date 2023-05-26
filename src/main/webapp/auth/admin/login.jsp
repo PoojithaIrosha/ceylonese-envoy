@@ -30,6 +30,11 @@
     <title>Ceylonese Envoy | Admin Login</title>
 </head>
 <body>
+<%-- Loader --%>
+<div id="loading-container">
+    <div id="loading-spinner"></div>
+</div>
+
 <%-- Preloader --%>
 <%@include file="../../includes/preloader.jsp" %>
 

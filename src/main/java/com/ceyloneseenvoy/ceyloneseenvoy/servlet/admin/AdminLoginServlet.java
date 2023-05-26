@@ -39,7 +39,6 @@ public class AdminLoginServlet extends HttpServlet {
 
                 // Generate custom token
                 String customToken = GenerateCustomToken.generateToken();
-                System.out.println("Custom token: " + customToken);
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(true, customToken)));
             } else {
                 resp.getWriter().println(objectMapper.writeValueAsString(new ResponseDTO(false, "Invalid email or password")));

@@ -7,7 +7,7 @@ import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
