@@ -5,7 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 dir('ceylonese-envoy') {
-                    sh 'mvn clean package'
+                    withMaven(maven: 'Maven') {
+                        sh 'mvn clean package'
+                    }
                 }
             }
         }
