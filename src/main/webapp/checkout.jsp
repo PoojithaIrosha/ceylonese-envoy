@@ -161,7 +161,7 @@
 
                 <div class="col-12 col-lg-6">
                     <div class="form-input">
-                        <input type="text" id="members" value="${pageContext.request.getParameter("members")}" disabled/>
+                        <input type="text" id="members" value="<%= (Integer.parseInt(request.getParameter("members")) < 1) ? "1" : request.getParameter("members") %>" disabled/>
                         <label class="lh-1 text-16 text-light-1">No of Members *</label>
                     </div>
                 </div>

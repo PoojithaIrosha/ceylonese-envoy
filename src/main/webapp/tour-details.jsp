@@ -250,11 +250,11 @@
                                             <div class="searchMenu-guests px-20 py-10 border-light rounded-4 js-form-dd js-form-counters">
 
                                                 <div>
-                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Number of members</h4>
+                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2" >Number of members</h4>
 
                                                     <div class="text-15 text-light-1 ls-2 lh-16">
-                                                        <input type="number" class="form-control border"
-                                                               placeholder="Ex: 5" name="members" required/>
+                                                        <input id="noOfMembers" type="text" class="form-control border"
+                                                               placeholder="Ex: 5" name="members" onkeyup="validateNoOfMembersField()" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -504,7 +504,7 @@
                             </div>
 
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6 mb-3">
 
                             <div class="form-input ">
                                 <input name="email" id="email" type="text" required>

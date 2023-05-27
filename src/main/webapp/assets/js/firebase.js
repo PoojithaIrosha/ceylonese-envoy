@@ -1,7 +1,8 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
-import {getDatabase, set, ref} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+import {getAuth, signInWithCustomToken} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyDUVHsSnSqNhBIVDKyb_5jSDVCMtO-jmu8",
     authDomain: "test-project-a74b6.firebaseapp.com",
@@ -61,10 +62,40 @@ $("#adminLoginForm").submit((event) => {
     })
 });
 
+function isDateInPast(dateString) {
+    // Convert the string to a Date object
+    var date = new Date(dateString);
+
+    // Get the current date
+    var currentDate = new Date();
+
+    // Compare the converted date with the current date
+    if (date.getTime() < currentDate.getTime()) {
+        return true; // The date is in the past
+    } else {
+        return false; // The date is not in the past
+    }
+}
+
+function getCurrentDateTime(currentDate) {
+    var year = currentDate.getFullYear();
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    var day = String(currentDate.getDate()).padStart(2, '0');
+    var hours = String(currentDate.getHours()).padStart(2, '0');
+    var minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    var seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+}
+
+
 $("#checkoutForm").submit((event) => {
     event.preventDefault();
 
     $("#checkoutSubmitBtn").attr("disabled", true).html("Please wait...");
+
+    const date = new Date();
+    const currentDateTime = getCurrentDateTime(date);
 
     const data = {
         firstName: $("#fName").val(),
@@ -83,7 +114,7 @@ $("#checkoutForm").submit((event) => {
         checkOut: $("#checkOut").val(),
         members: $("#members").val(),
         moreInfo: $("#moreInfo").val(),
-        requestedAt: new Date().toLocaleString()
+        requestedAt: currentDateTime
     }
 
     let errorMsg = "";
@@ -108,8 +139,12 @@ $("#checkoutForm").submit((event) => {
         errorMsg = "Country is required.";
     }else if(data.checkIn === "") {
         errorMsg = "Check-in date is required.";
+    }else if(isDateInPast(data.checkIn)){
+        errorMsg = "Check-in date cannot be in the past.";
     }else if(data.checkOut === "") {
         errorMsg = "Check-out date is required.";
+    }else if(isDateInPast(data.checkOut)){
+        errorMsg = "Check-out date cannot be in the past.";
     }else if(data.members === "") {
         errorMsg = "Number of members is required.";
     }
@@ -135,7 +170,7 @@ $("#checkoutForm").submit((event) => {
         success: (response) => {
             signInWithCustomToken(auth, response).then((userCredential) => {
                 const db = getDatabase();
-                set(ref(db, 'requests/' + Date.now()), data).then(() => {
+                set(ref(db, 'requests/' + date.getTime()), data).then(() => {
 
                     let form = new FormData();
                     form.append("name", data.firstName + " " + data.lastName);
