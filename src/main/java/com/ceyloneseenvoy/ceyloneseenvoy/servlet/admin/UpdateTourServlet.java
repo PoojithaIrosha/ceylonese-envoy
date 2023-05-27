@@ -99,7 +99,7 @@ public class UpdateTourServlet extends HttpServlet {
                 Collection<Part> parts = req.getParts();
                 List<TourPackageImage> tourPackageImages = new ArrayList<>();
 
-                String uploadPath = System.getProperty("catalina.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
+                String uploadPath = System.getProperty("user.home") + File.separator + "ceylonese-envoy" + File.separator + "tours";
 
                 File directory = new File(uploadPath);
                 if (!directory.exists()) {

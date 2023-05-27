@@ -54,7 +54,6 @@ public class AddAdminServlet extends HttpServlet {
                         }
                     }
 
-
                 }
 
             } else {
