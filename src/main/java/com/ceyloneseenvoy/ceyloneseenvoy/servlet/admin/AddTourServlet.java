@@ -4,6 +4,7 @@ import com.ceyloneseenvoy.ceyloneseenvoy.model.IsActive;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackage;
 import com.ceyloneseenvoy.ceyloneseenvoy.model.TourPackageImage;
 import com.ceyloneseenvoy.ceyloneseenvoy.util.HibernateUtil;
+import com.ceyloneseenvoy.ceyloneseenvoy.util.PropertiesUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -126,7 +127,7 @@ public class AddTourServlet extends HttpServlet {
                     String fileName = UUID.randomUUID() + ".jpg";
 
                     // Save the file to disk
-                    String uploadDirPath = System.getProperty("user.home") + File.separator + "/ceylonese-envoy/uploads/";
+                    String uploadDirPath = PropertiesUtil.getInstance().getProperty("img.upload.dir");
                     File uploadDir = new File(uploadDirPath);
                     if (!uploadDir.exists()) {
                         uploadDir.mkdirs();
