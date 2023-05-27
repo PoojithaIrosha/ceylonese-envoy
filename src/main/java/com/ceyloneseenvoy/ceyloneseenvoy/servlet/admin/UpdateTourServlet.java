@@ -135,7 +135,8 @@ public class UpdateTourServlet extends HttpServlet {
                     String fileName = UUID.randomUUID() + ".jpg";
 
                     // Save the file to disk
-                    String uploadDirPath = System.getProperty("user.home") + File.separator + "/ceylonese-envoy/uploads/";
+                    // String uploadDirPath = System.getProperty("user.home") + File.separator + "/ceylonese-envoy/uploads/";
+                    String uploadDirPath = "/var/www/uploads/";
                     File uploadDir = new File(uploadDirPath);
                     if (!uploadDir.exists()) {
                         uploadDir.mkdirs();
