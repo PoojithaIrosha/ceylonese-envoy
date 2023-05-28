@@ -286,7 +286,7 @@
 
                                         <div class="col-12">
                                             <button type="submit"
-                                               class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                               class="button py-15 px-35 h-60 col-12 rounded-4 -dark-1 search_btn fw-bold">
                                                 Make a Request
                                             </button>
                                         </div>

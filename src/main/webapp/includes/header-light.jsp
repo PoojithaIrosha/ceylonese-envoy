@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="header-margin"></div>
-<header data-add-bg="" class="header bg-white js-header" data-x="header" data-x-toggle="is-menu-opened">
+<header data-add-bg="" class="header bg-dark-1 js-header" data-x="header" data-x-toggle="is-menu-opened">
     <div data-anim="fade" class="header__container px-30 sm:px-20">
         <div class="row justify-between items-center">
 

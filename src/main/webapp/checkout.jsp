@@ -195,7 +195,7 @@
                 </div>
 
                 <div class="col-12 d-grid">
-                    <button id="checkoutSubmitBtn" type="submit" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">SUBMIT THE REQUEST</button>
+                    <button id="checkoutSubmitBtn" type="submit" class="button h-50 px-24 -dark-1 search_btn">SUBMIT THE REQUEST</button>
                 </div>
             </form>
         </div>
