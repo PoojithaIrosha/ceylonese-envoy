@@ -166,7 +166,7 @@
                                 <div class="col-auto">
                                     <div class="d-flex x-gap-5 items-center">
                                         <i class="icon-placeholder text-20 text-light-1"></i>
-                                        <div class="text-15 text-light-1"
+                                        <div class="text-15 text-light-1 text-uppercase"
                                              style="text-transform: capitalize">${tourPackage.locations}</div>
                                     </div>
                                 </div>
