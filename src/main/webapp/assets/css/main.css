@@ -3580,7 +3580,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header .header-logo img {
-    width: 230px;
+    margin-top: 5px;
+    width: 150px;
 }
 
 .header .header-menu .menu__nav li a {
