@@ -3,6 +3,17 @@
     src: url("../fonts/Brightwall.ttf");
 }
 
+
+/* For webkit-based browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+body {
+    scrollbar-width: none;
+}
+
 .ratio {
     position: relative;
     display: block;
