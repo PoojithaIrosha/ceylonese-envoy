@@ -647,7 +647,7 @@
                                         <span>${similarTourPackage.name}</span>
                                     </h4>
 
-                                    <p class="text-light-1 lh-14 text-14 mt-5">
+                                    <p class="text-light-1 lh-14 text-14 mt-5 text-uppercase">
                                             ${similarTourPackage.locations}
                                     </p>
 
