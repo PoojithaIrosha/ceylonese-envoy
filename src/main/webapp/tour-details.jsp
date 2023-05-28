@@ -205,15 +205,17 @@
                                 </div>
                             </c:if>
 
-                            <c:forEach items="${tourPackage.tourPackageImages}" var="image">
-                                <div class="swiper-slide">
-                                    <%
-                                        TourPackageImage tpi = (TourPackageImage) pageContext.getAttribute("image");
-                                    %>
-                                    <img src="<%= ImageURIUtil.convertFileToDataURI(tpi.getImage()) %>" alt="image"
-                                         class="rounded-4 col-12 h-full object-cover">
-                                </div>
-                            </c:forEach>
+                            <c:if test="${tourPackage.tourPackageImages.size() > 0}">
+                                <c:forEach items="${tourPackage.tourPackageImages}" var="image">
+                                    <div class="swiper-slide">
+                                        <%
+                                            TourPackageImage tpi = (TourPackageImage) pageContext.getAttribute("image");
+                                        %>
+                                        <img src="<%= ImageURIUtil.convertFileToDataURI(tpi.getImage()) %>" alt="image"
+                                             class="rounded-4 col-12 h-full object-cover">
+                                    </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
                         <%-- Tour Package Images --%>
 
@@ -281,11 +283,12 @@
                                             <div class="searchMenu-guests px-20 py-10 border-light rounded-4 js-form-dd js-form-counters">
 
                                                 <div>
-                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2" >Number of members</h4>
+                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Number of members</h4>
 
                                                     <div class="text-15 text-light-1 ls-2 lh-16">
                                                         <input id="noOfMembers" type="text" class="form-control border"
-                                                               placeholder="Ex: 5" name="members" onkeyup="validateNoOfMembersField()" required/>
+                                                               placeholder="Ex: 5" name="members"
+                                                               onkeyup="validateNoOfMembersField()" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -293,7 +296,7 @@
 
                                         <div class="col-12">
                                             <button type="submit"
-                                               class="button py-15 px-35 h-60 col-12 rounded-4 -dark-1 search_btn fw-bold">
+                                                    class="button py-15 px-35 h-60 col-12 rounded-4 -dark-1 search_btn fw-bold">
                                                 Make a Request
                                             </button>
                                         </div>
@@ -745,7 +748,7 @@
 <script src="assets/js/script.js"></script>
 
 <script>
-    document.getElementById("shareButton").addEventListener("click", function() {
+    document.getElementById("shareButton").addEventListener("click", function () {
         // Copy the current URL to the clipboard
         var currentURL = window.location.href;
 
