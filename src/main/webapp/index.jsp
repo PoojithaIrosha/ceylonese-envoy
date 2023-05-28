@@ -37,6 +37,12 @@
 </head>
 
 <body>
+
+<div class="enlarged-image-container">
+    <div class="enlarged-image-overlay"></div>
+    <img src="" alt="Enlarged Image" class="enlarged-image">
+</div>
+
 <%-- Preloader --%>
 <%@include file="includes/preloader.jsp" %>
 
@@ -293,52 +299,56 @@
     </section>
     <%-- Popular Destinations End --%>
 
-    <%-- Two Boxed Start --%>
+    <%-- Two Boxed Start - Covers--%>
     <section class="layout-pt-md layout-pb-md">
         <div class="container">
-            <div class="row y-gap-20">
-                <div data-anim="slide-up" class="col-md-6">
-                    <div class="ctaCard -type-1 rounded-4">
-                        <div class="ctaCard__image ratio ratio-63:55">
-                            <img class="img-ratio js-lazy" src="#" data-src="assets/img/backgrounds/1.png" alt="image"/>
-                        </div>
+            <div class="row y-gap-20 d-flex justify-center align-items-center">
 
-                        <div class="ctaCard__content py-70 px-70 lg:py-30 lg:px-30">
-                            <h4 class="text-40 lg:text-26 text-white">
-                                Things to do on<br/>
-                                your trip
-                            </h4>
+                    <div class="col-4">
+                        <div class="row">
 
-                            <div class="d-inline-block mt-30">
-                                <a href="#"
-                                   class="button px-48 py-15 -blue-1 -min-180 bg-white text-dark-1">Experiences</a>
+                            <div data-anim="slide-up" class="col-md-12">
+                                <div class=" rounded-4">
+                                    <div class="">
+                                        <img class="js-lazy enlargeable-image" src="#" data-src="assets/img/covers/1.jpg" height=""
+                                             alt="image"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div data-anim="slide-up delay-1" class="col-md-6">
-                    <div class="ctaCard -type-1 rounded-4">
-                        <div class="ctaCard__image ratio ratio-63:55">
-                            <img class="img-ratio js-lazy" src="#" data-src="assets/img/backgrounds/2.png" alt="image"/>
-                        </div>
+                    <div class="col-8">
 
-                        <div class="ctaCard__content py-70 px-70 lg:py-30 lg:px-30">
-                            <div class="text-15 fw-500 text-white mb-10">
-                                Enjoy Summer Deals
+                        <div class="row y-gap-20">
+                            <div data-anim="slide-up" class="col-md-12">
+                                <div class=" rounded-4">
+                                    <div class="image-container">
+                                        <img class="js-lazy enlargeable-image" src="#" data-src="assets/img/covers/2.jpg"
+                                             alt="image"/>
+                                    </div>
+                                </div>
                             </div>
 
-                            <h4 class="text-40 lg:text-26 text-white">
-                                Up to 70% Discount!
-                            </h4>
+                            <div data-anim="slide-up" class="col-md-6">
+                                <div class=" rounded-4">
+                                    <div class="">
+                                        <img class="js-lazy enlargeable-image" src="#" data-src="assets/img/covers/3.jpg"
+                                             alt="image"/>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="d-inline-block mt-30">
-                                <a href="#" class="button px-48 py-15 -blue-1 -min-180 bg-white text-dark-1">Learn
-                                    More</a>
+                            <div data-anim="slide-up" class="col-md-6">
+                                <div class=" rounded-4">
+                                    <div class="">
+                                        <img class="js-lazy enlargeable-image" src="#" data-src="assets/img/covers/4.jpeg"
+                                             alt="image"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </section>
@@ -468,7 +478,8 @@
 
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
-                                            <span class="text-16 fw-500 text-dark-1">USD ${df.format(tourPackage.price)}</span><smal>/per one person</smal>
+                                            <span class="text-16 fw-500 text-dark-1">USD ${df.format(tourPackage.price)}</span>
+                                            <smal>/per one person</smal>
                                         </div>
                                     </div>
                                 </div>

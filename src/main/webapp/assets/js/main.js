@@ -1879,3 +1879,31 @@
         }
     })();
 })();
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var enlargeableImages = document.getElementsByClassName('enlargeable-image');
+    var enlargedImageContainer = document.querySelector('.enlarged-image-container');
+    var enlargedImage = document.querySelector('.enlarged-image');
+    var enlargedImageOverlay = document.querySelector('.enlarged-image-overlay');
+
+    function toggleEnlarged(imageSrc) {
+        enlargedImage.src = imageSrc;
+        enlargedImageContainer.style.display = 'flex';
+    }
+
+    function closeEnlarged() {
+        enlargedImageContainer.style.display = 'none';
+    }
+
+    for (var i = 0; i < enlargeableImages.length; i++) {
+        enlargeableImages[i].addEventListener('click', function() {
+            var imageSrc = this.getAttribute('src');
+            toggleEnlarged(imageSrc);
+        });
+    }
+
+    enlargedImage.addEventListener('click', closeEnlarged);
+    enlargedImageOverlay.addEventListener('click', closeEnlarged);
+});
+
