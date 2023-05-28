@@ -29,6 +29,7 @@
                 request.getRequestDispatcher("errors/404.jsp").forward(request, response);
             }
 
+            System.out.println(tourPackage.getTourPackageImages());
             pageContext.setAttribute("df", DecimalFormatUtil.getInstance());
             pageContext.setAttribute("tourPackage", tourPackage);
         } catch (Exception e) {
@@ -198,24 +199,22 @@
 
                         <%-- Tour Package Images --%>
                         <div class="swiper-wrapper">
-                            <c:if test="${tourPackage.tourPackageImages.size() == 0}">
+
+                            <c:if test="${empty tourPackage.tourPackageImages or tourPackage.tourPackageImages.size() == 0}">
                                 <div class="swiper-slide">
-                                    <img src="${contextPath}/assets/img/tours/default.png" alt="image"
-                                         class="rounded-4 col-12 h-full object-cover">
+                                    <img src="${contextPath}/assets/img/tours/default.png" alt="image" class="rounded-4 col-12 h-full object-cover">
                                 </div>
                             </c:if>
 
-                            <c:if test="${tourPackage.tourPackageImages.size() > 0}">
-                                <c:forEach items="${tourPackage.tourPackageImages}" var="image">
-                                    <div class="swiper-slide">
-                                        <%
-                                            TourPackageImage tpi = (TourPackageImage) pageContext.getAttribute("image");
-                                        %>
-                                        <img src="<%= ImageURIUtil.convertFileToDataURI(tpi.getImage()) %>" alt="image"
-                                             class="rounded-4 col-12 h-full object-cover">
-                                    </div>
-                                </c:forEach>
-                            </c:if>
+                            <c:forEach items="${tourPackage.tourPackageImages}" var="image">
+                                <div class="swiper-slide">
+                                    <%
+                                        TourPackageImage tpi = (TourPackageImage) pageContext.getAttribute("image");
+                                    %>
+                                    <img src="<%= ImageURIUtil.convertFileToDataURI(tpi.getImage()) %>" alt="image"
+                                         class="rounded-4 col-12 h-full object-cover">
+                                </div>
+                            </c:forEach>
                         </div>
                         <%-- Tour Package Images --%>
 
@@ -283,12 +282,11 @@
                                             <div class="searchMenu-guests px-20 py-10 border-light rounded-4 js-form-dd js-form-counters">
 
                                                 <div>
-                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2">Number of members</h4>
+                                                    <h4 class="text-15 fw-500 ls-2 lh-16 mb-2" >Number of members</h4>
 
                                                     <div class="text-15 text-light-1 ls-2 lh-16">
                                                         <input id="noOfMembers" type="text" class="form-control border"
-                                                               placeholder="Ex: 5" name="members"
-                                                               onkeyup="validateNoOfMembersField()" required/>
+                                                               placeholder="Ex: 5" name="members" onkeyup="validateNoOfMembersField()" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -296,7 +294,7 @@
 
                                         <div class="col-12">
                                             <button type="submit"
-                                                    class="button py-15 px-35 h-60 col-12 rounded-4 -dark-1 search_btn fw-bold">
+                                               class="button py-15 px-35 h-60 col-12 rounded-4 -dark-1 search_btn fw-bold">
                                                 Make a Request
                                             </button>
                                         </div>
@@ -642,10 +640,27 @@
 
                                     <div class="cardImage ratio ratio-1:1">
                                         <div class="cardImage__content">
-                                            <% TourPackage tp = (TourPackage) pageContext.getAttribute("similarTourPackage"); %>
+                                            <%
+
+                                                TourPackage tp = (TourPackage) pageContext.getAttribute("similarTourPackage");
+
+                                                if(tp.getTourPackageImages().size() > 0) {
+                                                    %>
                                             <img class="rounded-4 col-12"
                                                  src="<%= ImageURIUtil.convertFileToDataURI(tp.getTourPackageImages().get(0).getImage()) %>"
                                                  alt="image">
+                                            <%
+                                                }else {
+                                                    %>
+                                            <img class="rounded-4 col-12"
+                                                 src="${contextPath}/assets/img/tours/default.png"
+                                                 alt="image">
+                                            <%
+                                                }
+
+                                            %>
+
+
                                         </div>
                                     </div>
 
@@ -748,7 +763,7 @@
 <script src="assets/js/script.js"></script>
 
 <script>
-    document.getElementById("shareButton").addEventListener("click", function () {
+    document.getElementById("shareButton").addEventListener("click", function() {
         // Copy the current URL to the clipboard
         var currentURL = window.location.href;
 
