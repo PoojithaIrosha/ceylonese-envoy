@@ -9,7 +9,7 @@
                     <!--Header Logo Start-->
                     <a href="${contextPath}/" class="header-logo mr-20" data-x="header-logo"
                        data-x-toggle="is-logo-dark">
-                        <img src="${contextPath}/assets/img/logo/logo_light.png" alt="logo icon"/>
+                        <img src="${contextPath}/assets/img/logo/logo.png" alt="logo icon"/>
                         <img src="${contextPath}/assets/img/logo/logo.png" alt="logo icon"/>
                     </a>
                     <!--Header Logo End-->

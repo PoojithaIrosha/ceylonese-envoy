@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                             <div>
-                                <button class="mainSearch__submit button -dark-1 py-15 px-40 col-12 rounded-4 bg-blue-1 text-white">
+                                <button class="mainSearch__submit button py-15 px-40 col-12 rounded-4 search_btn">
                                     <i class="icon-search text-20 mr-10"></i>
                                     Search
                                 </button>

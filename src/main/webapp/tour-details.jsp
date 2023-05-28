@@ -112,21 +112,52 @@
                     <div class="row x-gap-20 y-gap-20 items-center pt-10">
                         <div class="col-auto">
                             <div class="d-flex items-center">
-                                <div class="d-flex x-gap-5 items-center">
+                                <%
+                                    try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                                        TourPackage tr = (TourPackage) pageContext.getAttribute("tourPackage");
+                                        Query query = hs.createQuery("select rating, COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id group by rating order by frequency desc").setMaxResults(1).setParameter("id", tr.getId());
+                                        Object[] result = (Object[]) query.uniqueResult();
 
-                                    <i class="icon-star text-10 text-yellow-1"></i>
+                                        if (result != null)
+                                            pageContext.setAttribute("bestRating", result);
+                                        else
+                                            pageContext.setAttribute("bestRating", new Object[]{0, 0});
+                                    }
+                                %>
 
-                                    <i class="icon-star text-10 text-yellow-1"></i>
+                                <div class="d-flex items-center x-gap-5">
 
-                                    <i class="icon-star text-10 text-yellow-1"></i>
-
-                                    <i class="icon-star text-10 text-yellow-1"></i>
-
-                                    <i class="icon-star text-10 text-yellow-1"></i>
+                                    <%
+                                        for (int i = 0; i < 5; i++) {
+                                            Object[] bestRating = (Object[]) pageContext.getAttribute("bestRating");
+                                            if (i < (int) bestRating[0]) {
+                                    %>
+                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                    <%
+                                    } else {
+                                    %>
+                                    <div class="icon-star text-light-1 text-10"></div>
+                                    <%
+                                            }
+                                        }
+                                    %>
 
                                 </div>
 
-                                <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
+                                <%
+                                    try (Session session1 = HibernateUtil.getSessionFactory().openSession()) {
+                                        TourPackage tr = (TourPackage) pageContext.getAttribute("tourPackage");
+                                        Query<Long> query = session1.createQuery("select COUNT(*) as frequency from TourReview tr where tr.tourPackage.id = :id", Long.class).setParameter("id", tr.getId());
+                                        Long result = query.uniqueResult();
+
+                                        if (result != null) {
+                                            pageContext.setAttribute("reviewCount", result);
+                                        } else {
+                                            pageContext.setAttribute("reviewCount", 0);
+                                        }
+                                    }
+                                %>
+                                <div class="text-14 text-light-1 ml-10">${reviewCount} reviews</div>
                             </div>
                         </div>
 
@@ -134,7 +165,7 @@
                             <div class="row x-gap-10 items-center">
                                 <div class="col-auto">
                                     <div class="d-flex x-gap-5 items-center">
-                                        <i class="icon-placeholder text-16 text-light-1"></i>
+                                        <i class="icon-placeholder text-20 text-light-1"></i>
                                         <div class="text-15 text-light-1"
                                              style="text-transform: capitalize">${tourPackage.locations}</div>
                                     </div>
@@ -147,16 +178,9 @@
                 <div class="col-auto">
                     <div class="row x-gap-10 y-gap-10">
                         <div class="col-auto">
-                            <button class="button px-15 py-10 -blue-1">
+                            <button id="shareButton" class="button px-15 py-10 -blue-1">
                                 <i class="icon-share mr-10"></i>
                                 Share
-                            </button>
-                        </div>
-
-                        <div class="col-auto">
-                            <button class="button px-15 py-10 -blue-1 bg-light-2">
-                                <i class="icon-heart mr-10"></i>
-                                Save
                             </button>
                         </div>
                     </div>
@@ -471,28 +495,45 @@
                             <div class="border-top-light"></div>
                         </div>
 
-                        <div class="col-auto">
-                            <h3 class="text-22 fw-500">Select your rating here</h3>
+                        <%-- <div class="col-auto"> --%>
+                        <%--     <h3 class="text-22 fw-500">Select your rating here</h3> --%>
 
-                            <ul class="d-flex gap-3 mt-3">
-                                <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar1"
-                                       onmouseover="changeRatingStarOnHover(1)"></i></li>
-                                <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar2"
-                                       onmouseover="changeRatingStarOnHover(2)"></i></li>
-                                <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar3"
-                                       onmouseover="changeRatingStarOnHover(3)"></i></li>
-                                <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar4"
-                                       onmouseover="changeRatingStarOnHover(4)"></i></li>
-                                <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar5"
-                                       onmouseover="changeRatingStarOnHover(5)"></i></li>
-                            </ul>
-                        </div>
+                        <%--     <ul class="d-flex gap-3 mt-3"> --%>
+                        <%--         <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar1" --%>
+                        <%--                onmouseover="changeRatingStarOnHover(1)"></i></li> --%>
+                        <%--         <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar2" --%>
+                        <%--                onmouseover="changeRatingStarOnHover(2)"></i></li> --%>
+                        <%--         <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar3" --%>
+                        <%--                onmouseover="changeRatingStarOnHover(3)"></i></li> --%>
+                        <%--         <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar4" --%>
+                        <%--                onmouseover="changeRatingStarOnHover(4)"></i></li> --%>
+                        <%--         <li><i class="fa-regular fs-4 fa-star text-warning" id="ratingStar5" --%>
+                        <%--                onmouseover="changeRatingStarOnHover(5)"></i></li> --%>
+                        <%--     </ul> --%>
+                        <%-- </div> --%>
                     </div>
                 </div>
 
                 <div class="col-xl-8">
                     <form id="addReviewForm" method="post" class="row">
                         <h3 class="mb-2">Add Your Review</h3>
+
+                        <div class="col-12 mb-3">
+                            <h3 class="text-16 fw-500">Select your rating here</h3>
+
+                            <ul class="d-flex gap-2 mt-1">
+                                <li><i class="fa-regular fs-5 fa-star text-warning" id="ratingStar1"
+                                       onmouseover="changeRatingStarOnHover(1)"></i></li>
+                                <li><i class="fa-regular fs-5 fa-star text-warning" id="ratingStar2"
+                                       onmouseover="changeRatingStarOnHover(2)"></i></li>
+                                <li><i class="fa-regular fs-5 fa-star text-warning" id="ratingStar3"
+                                       onmouseover="changeRatingStarOnHover(3)"></i></li>
+                                <li><i class="fa-regular fs-5 fa-star text-warning" id="ratingStar4"
+                                       onmouseover="changeRatingStarOnHover(4)"></i></li>
+                                <li><i class="fa-regular fs-5 fa-star text-warning" id="ratingStar5"
+                                       onmouseover="changeRatingStarOnHover(5)"></i></li>
+                            </ul>
+                        </div>
                         <div>
                             <input name="packageId" id="packageId" type="text" value="${tourPackage.id}" required
                                    hidden="hidden">
@@ -513,13 +554,12 @@
 
                         </div>
                         <div class="col-12 mb-3">
-
                             <div class="form-input ">
                                 <textarea name="comment" id="comment" required rows="6"></textarea>
                                 <label class="lh-1 text-16 text-light-1">Write Your Comment</label>
                             </div>
-
                         </div>
+
                         <div class="col-auto">
                             <button type="submit" class="button -md -dark-1 bg-blue-1 text-white">
                                 Post Comment
@@ -696,5 +736,27 @@
 <script src="assets/js/vendors.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/script.js"></script>
+
+<script>
+    document.getElementById("shareButton").addEventListener("click", function() {
+        // Copy the current URL to the clipboard
+        var currentURL = window.location.href;
+
+        // Create a temporary input element to hold the URL
+        var tempInput = document.createElement("input");
+        tempInput.setAttribute("value", currentURL);
+        document.body.appendChild(tempInput);
+
+        // Select and copy the value of the temporary input element
+        tempInput.select();
+        document.execCommand("copy");
+
+        // Remove the temporary input element from the document
+        document.body.removeChild(tempInput);
+
+        // Display a message or perform any other actions
+        alert("URL copied to clipboard!");
+    });
+</script>
 </body>
 </html>

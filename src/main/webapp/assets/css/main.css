@@ -3569,7 +3569,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header .header-logo img {
-    width: 200px;
+    width: 230px;
+}
+
+.header .header-menu .menu__nav li a {
+    color: black;
 }
 
 @media (max-width: 767px) {
@@ -10531,7 +10535,8 @@ div[data-slider] > input[type=range]::-ms-tooltip {
 }
 
 .bg-dark-1 {
-    background-color: var(--color-dark-1) !important;
+    /*background-color: var(--color-dark-1) !important;*/
+    background-color: #E0E4DB;
 }
 
 .header-bg {
@@ -13167,4 +13172,15 @@ table.table-5 td {
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
     }
+}
+
+
+.search_btn {
+    background-color: #BFC6B8;
+    color: black;
+}
+
+.search_btn:hover {
+    background-color: rgba(191, 198, 184, 0.84);
+    color: black;
 }
