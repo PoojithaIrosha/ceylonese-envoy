@@ -138,7 +138,6 @@
                                                     .getResultList();
 
                                             if (tourPackages != null) {
-                                                System.out.println(tourPackages);
                                                 pageContext.setAttribute("pageNo", pageNo);
                                                 pageContext.setAttribute("tourPackages", tourPackages);
                                             } else {
