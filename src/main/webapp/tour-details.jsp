@@ -198,6 +198,13 @@
 
                         <%-- Tour Package Images --%>
                         <div class="swiper-wrapper">
+                            <c:if test="${tourPackage.tourPackageImages.size() == 0}">
+                                <div class="swiper-slide">
+                                    <img src="${contextPath}/assets/img/tours/default.png" alt="image"
+                                         class="rounded-4 col-12 h-full object-cover">
+                                </div>
+                            </c:if>
+
                             <c:forEach items="${tourPackage.tourPackageImages}" var="image">
                                 <div class="swiper-slide">
                                     <%
