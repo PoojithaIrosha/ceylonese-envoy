@@ -38,12 +38,12 @@
 
           <div class="mt-30">
             <div class="text-14 mt-30">Toll Free Customer Care</div>
-            <a href="#" class="text-18 fw-500 text-blue-1 mt-5">+94 71 1234 4567</a>
+            <a href="#" class="text-18 fw-bolder text-black mt-5">+94 71 1234 4567</a>
           </div>
 
           <div class="mt-35">
             <div class="text-14 mt-30">Need live support?</div>
-            <a href="#" class="text-18 fw-500 text-blue-1 mt-5">ceyloneseenvoy@gmail.com</a>
+            <a href="#" class="text-18 fw-bolder text-black mt-5">ceyloneseenvoy@gmail.com</a>
           </div>
         </div>
 
