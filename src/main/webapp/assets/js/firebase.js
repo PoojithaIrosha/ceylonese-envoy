@@ -4,18 +4,17 @@ import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.22.0/f
 import {getAuth, signInWithCustomToken} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDUVHsSnSqNhBIVDKyb_5jSDVCMtO-jmu8",
-    authDomain: "test-project-a74b6.firebaseapp.com",
-    databaseURL: "https://test-project-a74b6-default-rtdb.firebaseio.com",
-    projectId: "test-project-a74b6",
-    storageBucket: "test-project-a74b6.appspot.com",
-    messagingSenderId: "479402090311",
-    appId: "1:479402090311:web:c0784b7986a04aa3c5b662",
-    measurementId: "G-QDF1H2BYWK"
+    apiKey: "AIzaSyBw3WcbcyFPMeZUO_npPMURfmE5SigdN7Y",
+    authDomain: "ceylonese-envoy-d6431.firebaseapp.com",
+    databaseURL: "https://ceylonese-envoy-d6431-default-rtdb.firebaseio.com",
+    projectId: "ceylonese-envoy-d6431",
+    storageBucket: "ceylonese-envoy-d6431.appspot.com",
+    messagingSenderId: "964745241208",
+    appId: "1:964745241208:web:73d7d7cf041d60f247438d",
+    measurementId: "G-8RHTQHE5PF"
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const analytics = getAnalytics(app);

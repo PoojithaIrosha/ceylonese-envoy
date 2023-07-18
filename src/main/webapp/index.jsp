@@ -544,60 +544,41 @@
                                 </div>
 
                                 <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque volutpat
-                                    gravida augue, in
-                                    dignissim nunc varius
-                                    et. Nam in elit iaculis, consequat arcu id, pellentesque leo. Mauris magna magna,
-                                    vehicula non
-                                    bibendum id, sodales eget
+                                    I recently used the travel agency web application for booking my family vacation, and I must say it was a fantastic experience. The website was user-friendly, and I could easily search for hotels based on my preferences. The booking process was smooth, and I received instant confirmation. The best part was the personalized recommendations for sightseeing and activities at my destination. I highly recommend this ceylonese envoy travel agency for hassle-free travel planning.
                                 </p>
                             </div>
 
                             <div class="swiper-slide">
                                 <div class="row items-center x-gap-30 y-gap-20">
                                     <div class="col-auto">
-                                        <img src="#" data-src="assets/img/avatars/1.png" alt="image"
+                                        <img style="height: 60px" src="#" data-src="assets/img/users/user.png" alt="image"
                                              class="js-lazy"/>
                                     </div>
 
                                     <div class="col-auto">
-                                        <h5 class="text-16 fw-500">Chamath Sasanka</h5>
+                                        <h5 class="text-16 fw-500">Sarah</h5>
                                     </div>
                                 </div>
 
                                 <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque volutpat
-                                    gravida augue, in
-                                    dignissim nunc
-                                    varius
-                                    eget
+                                    I've been using this ceylonese envoy web application for a while now, and I'm extremely satisfied with its services. The website offers a wide range of destinations and travel packages to choose from. The interface is intuitive, making it easy to navigate and find the best deals. The customer support team is responsive and helpful whenever I had any queries. They also provide regular updates and notifications about my bookings, which keeps me well-informed. This web application has definitely made my travel planning much more convenient and enjoyable.
                                 </p>
                             </div>
 
                             <div class="swiper-slide">
                                 <div class="row items-center x-gap-30 y-gap-20">
                                     <div class="col-auto">
-                                        <img src="#" data-src="img/avatars/testimonials/2.png" alt="image"
+                                        <img style="height: 60px" src="#" data-src="assets/img/users/user.png" alt="image"
                                              class="js-lazy"/>
                                     </div>
 
                                     <div class="col-auto">
-                                        <h5 class="text-16 fw-500">Chamath Sasanka</h5>
+                                        <h5 class="text-16 fw-500">Adam Smith</h5>
                                     </div>
                                 </div>
 
                                 <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque volutpat
-                                    gravida augue, in
-                                    dignissim nunc
-                                    varius
-                                    et. Nam in elit iaculis, consequat arcu id, pellentesque leo. Mauris magna magna,
-                                    vehicula non
-                                    bibendum id, sodales
-                                    eget
-                                    neque. Nulla id pulvinar urna, at accumsan felis. Phasellus interdum dictum elit in
-                                    sollicitudin.
-                                    Morbi vel luctus
+                                    I'm always on the lookout for affordable travel options, and this travel agency web application has been a game-changer for me. The website offers great deals on hotels, and vacation packages that fit my budget. I love the flexibility to customize my trip and choose from different accommodation options. The user reviews and ratings for hotels and activities are reliable and have helped me make wise choices. This web application has made luxury travel accessible to budget-conscious travelers like me.
                                 </p>
                             </div>
 
