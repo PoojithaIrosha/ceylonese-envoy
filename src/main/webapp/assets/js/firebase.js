@@ -2,17 +2,9 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
 import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 import {getAuth, signInWithCustomToken} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import {getFirebaseConfig} from "./firebase-config.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBw3WcbcyFPMeZUO_npPMURfmE5SigdN7Y",
-    authDomain: "ceylonese-envoy-d6431.firebaseapp.com",
-    databaseURL: "https://ceylonese-envoy-d6431-default-rtdb.firebaseio.com",
-    projectId: "ceylonese-envoy-d6431",
-    storageBucket: "ceylonese-envoy-d6431.appspot.com",
-    messagingSenderId: "964745241208",
-    appId: "1:964745241208:web:73d7d7cf041d60f247438d",
-    measurementId: "G-8RHTQHE5PF"
-};
+const firebaseConfig = getFirebaseConfig();
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

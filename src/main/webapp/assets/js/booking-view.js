@@ -7,17 +7,9 @@ import {
     get,
     child
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+import {getFirebaseConfig} from "./firebase-config.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDUVHsSnSqNhBIVDKyb_5jSDVCMtO-jmu8",
-    authDomain: "test-project-a74b6.firebaseapp.com",
-    databaseURL: "https://test-project-a74b6-default-rtdb.firebaseio.com",
-    projectId: "test-project-a74b6",
-    storageBucket: "test-project-a74b6.appspot.com",
-    messagingSenderId: "479402090311",
-    appId: "1:479402090311:web:c0784b7986a04aa3c5b662",
-    measurementId: "G-QDF1H2BYWK"
-};
+const firebaseConfig = getFirebaseConfig();
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
