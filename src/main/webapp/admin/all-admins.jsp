@@ -31,7 +31,7 @@
     <!-- Icon -->
     <link rel="icon" href="../assets/img/logo/favicon.jpg"/>
 
-    <title>All Admins | Ceylonse Envoy</title>
+    <title>Manage Admins | Ceylonse Envoy</title>
 </head>
 <body>
 <%@ include file="../includes/preloader.jsp" %>

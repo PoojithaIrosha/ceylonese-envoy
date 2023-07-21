@@ -15,6 +15,9 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Discover the wonders of Sri Lanka with Ceylonese Envoy. We offer tailored travel experiences, guided tours, and unforgettable adventures. Book your journey today!">
+    <meta name="keywords" content="Ceylonese Envoy, travel agency, Sri Lanka travel, guided tours, tailor-made trips, adventure travel, vacation packages, travel experiences">
+    <meta name="author" content="Ceylonese Envoy"/>
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/"/>
@@ -33,7 +36,7 @@
     <link rel="icon" href="assets/img/logo/favicon.jpg"/>
 
     <!-- Title -->
-    <title>Ceylonese Envoy</title>
+    <title>Ceylonese Envoy | Escape the ordinary. It is the place to be</title>
 </head>
 
 <body>
