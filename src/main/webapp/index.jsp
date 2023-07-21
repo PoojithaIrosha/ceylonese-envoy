@@ -57,7 +57,7 @@
     <%-- Hero Section Start --%>
     <section data-anim-wrap class="masthead -type-1 z-5">
         <div data-anim-child="fade" class="masthead__bg">
-            <img src="#" alt="image" data-src="assets/img/masthead/web11.png" class="js-lazy"/>
+            <img src="#" alt="image" data-src="assets/img/masthead/web11-min.jpg" class="js-lazy"/>
         </div>
 
         <div class="container">
